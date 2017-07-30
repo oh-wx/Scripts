@@ -1,0 +1,16 @@
+/*
+	Stylesheet
+*/
+
+html { background-color: #000; }
+body {
+	background-color: #FFF;
+	width: 1000px;
+	margin: 0 auto;
+}
+img { margin: 0 auto; }
+
+
+
+
+.hide { display: none; }

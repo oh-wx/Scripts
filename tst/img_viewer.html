@@ -1,0 +1,88 @@
+<! DOCTYPE html>
+<html>
+
+<head>
+<title>JS Animator</title>
+
+<link rel='stylesheet' type='text/css' href='./css/stylesheet.css' />
+<script tpye='text/javascript' src='./js/ImgViewer.js'></script>
+
+<script>
+	var vis = ['./img/VISSAT~12Z-US-20170502.gif',
+			   './img/VISSAT~13Z-US-20170502.gif',
+			   './img/VISSAT~14Z-US-20170502.gif',
+			   './img/VISSAT~15Z-US-20170502.gif',
+			   './img/VISSAT~16Z-US-20170502.gif',
+			   './img/VISSAT~17Z-US-20170502.gif'];
+	
+	var rdr = ['./img/BR~12Z-MW-20170503.gif',
+			   './img/BR~13Z-MW-20170503.gif',
+			   './img/BR~14Z-MW-20170503.gif',
+			   './img/BR~15Z-MW-20170503.gif',
+			   './img/BR~16Z-MW-20170503.gif',
+			   './img/BR~17Z-MW-20170503.gif'];
+	
+	var vis_viewer = new ImgViewer(vis, 'Viewer1');
+	
+	var rdr_viewer = new ImgViewer(rdr, 'Viewer2');
+	//var index = 0;
+</script>
+</head>
+
+<body>
+<div id='ImgWrapper'>
+		<div>
+		<button id='Frst' onclick='vis_viewer.frst()'>|<</button>
+		<button id='Back' onclick='vis_viewer.back()'><</button>
+		<button id='Paus' onclick='vis_viewer.paus()'>||</button>
+		<button id='Play' onclick='vis_viewer.play()'>|></button>
+		<button id='Fore' onclick='vis_viewer.fore()'>></button>
+		<button id='Last' onclick='vis_viewer.last()'>>|</button>
+		</div>
+		
+		<img id='Viewer1' src='./img/VISSAT~12Z-US-20170502.gif' alt='img1' />
+		
+		<br />
+		<br />
+		
+		<div>
+		<button id='Frst1' onclick='rdr_viewer.frst()'>|<</button>
+		<button id='Back1' onclick='rdr_viewer.back()'><</button>
+		<button id='Paus1' onclick='rdr_viewer.paus()'>||</button>
+		<button id='Play1' onclick='rdr_viewer.play()'>|></button>
+		<button id='Fore1' onclick='rdr_viewer.fore()'>></button>
+		<button id='Last1' onclick='rdr_viewer.last()'>>|</button>
+		</div>
+		
+		<img id='Viewer2' src='./img/BR~12Z-MW-20170503.gif' alt='img2' />
+		<!-- <div><button id='Test' onclick='test()'>test</button></div> -->
+
+</div>
+<div id='GlsWrapper'>
+	<dl>
+		<dt>Term 1</dt>
+		<dd>
+			this is the definition of Term 1
+			<div class='hide'>
+			illustrative example of Term 1
+			</div>
+		</dd>
+		<dt>Term 2</dt>
+		<dd>
+			this is the definition of Term 2
+			<div class='hide'>
+			illustrative example of Term 2
+			</div>
+		</dd>
+		<dt>Term 3</dt>
+		<dd>
+			this is the definition of Term 3
+			<div class='hide'>
+			illustrative example of Term 3
+			</div>
+		</dd>
+	</dl>
+</div>
+</body>
+
+</html>
