@@ -34,7 +34,17 @@ from datetime import date, timedelta
 #			- updated line: path = Menu.REPO + Menu.obs['ini']
 #			- updated write_file(...) to fix path error
 #
-#	
+
+### UPDATES - 12/12/2017 ###
+#
+#	get_psu()
+#		@PSU url broken, using >168hr url for EURO
+#
+#	get_obs()
+#		added H8FRNT to frozen params list
+#		added H7FRNT 	"	"	"	"	"
+#		added H8TADV	"	"	"	"	"
+#		added H7TADV	"	"	"	"	"
 
 
 
@@ -171,7 +181,11 @@ class Menu:
 				   
 		frozen	= [('SFCTEMP','fztp'),
 				   ('SFCBULB','swbt'),
-				   ('MAXBULB','mxwb')]
+				   ('MAXBULB','mxwb'),
+				   ('H8FRNT','8fnt',True),
+				   ('H7FRNT','7fnt',True),
+				   ('H8TADV','tadv',True),
+				   ('H7TADV','7tad',True)]
 				  
 		severe  = petig + thermo + shear + comp
 		winter  = petig + frozen
@@ -272,8 +286,9 @@ class Menu:
 
 		# grab data!
 		for i in range(start, stop+interval, interval):
-			if model=='EURO' and i>168:
-				url = models[model][1] + init
+			
+			if model=='EURO': #and i>168:						# < ------------ ERROR @ PSU model[0] url broken
+				url = models[model][1] + init					# < ------------ ||
 
 			image = 'http://mp1.met.psu.edu/~fxg1/{model}/f{hr}.gif'.format(hr=i, model=url)
 			fyle = '{hr}hr_{model}-{init}Z-'.format( hr=i, model=model, init=init.strip('z').zfill(2) ) + Menu.DATE.strftime('%Y%m%d') + '.gif'
