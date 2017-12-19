@@ -401,8 +401,45 @@ class Menu:
 		print( '### TEST ###' )
 		print( 'TwisterData has not been implemented' )
 		print( str(model) + ' ' + str(init) )
+		# --------- end get_twd() ---------- #
 	
-	# --------- end get_twd() ---------- #
+	'''
+	def get_iwx():
+		banner = ''
+		banner = banner.ljust(len(Menu.mdl['mdl'])+4,'#')
+		print( banner ) #if Menu.mdl['mdl']=='EURO' else print( '############' )	# stupid formatting conditionals
+		print( '# Instant Wx Maps - {mdl} ~{init} #'.format(mdl=Menu.mdl['mdl'], init=Menu.mdl['ini']) )
+		print( banner ) #if Menu.mdl['mdl']=='EURO' else print( '############' )	# stupid formatting conditionals
+		print( '\nEnter Forecast Hours\n' )
+		
+		# get Model data to build URL
+		start	= int( input('Starting hour >>  ') )
+		stop 	= int( input('Ending hour   >>  ') )
+		
+		
+		models 	= {'EURO':('ECMWF_','ECMWF0.5_'), 'CMC':('CMC_','CMCNA_'), 'GFS':('MRF_','')}
+		model  	= Menu.mdl['mdl']
+		init 	= '0z' if Menu.mdl['ini']=='00Z' else Menu.mdl['ini'].lower().strip('0')	# format init time for URL
+		interval = 12
+		
+		if model=='CMC' and init=='12z':
+			url = models[model][1] + init
+		else:
+			url = models[model][0] + init
+
+		if model == 'EURO':
+			interval = 24
+
+		# grab data!
+		for i in range(start, stop+interval, interval):
+			
+			if model=='EURO': #and i>168:						# < ------------ ERROR @ PSU model[0] url broken
+				url = models[model][1] + init	*/				# < ------------ ||
+		
+		image = 'http://www.instantweathermaps.com/ECMWF/2017121812/USA_PRMSL_msl_144.gif'	#.format(hr=i, model=url)
+		fyle = 'test.gif'	#.format( hr=i, model=model, init=init.strip('z').zfill(2) ) + Menu.DATE.strftime('%Y%m%d') + '.gif'
+		Menu.write_file(image, fyle) 
+	'''
 		
 	def main_menu():
 		options = {'1':('Observations',Menu.obs_menu),
@@ -605,6 +642,7 @@ class Menu:
 	def mdl_sauc():
 		options = {'1':('PSU Ewall',  Menu.get_psu),
 				   '2':('Twisterdata',Menu.get_twd)}
+				   #'3':('Inst Wx Map',Menu.get_iwx)}
 		
 		# cumbersome conditional to determine sauce, majority are dependent
 		if Menu.mdl['mdl'] == 'GFS':
@@ -625,6 +663,7 @@ class Menu:
 		elif Menu.mdl['mdl']=='NAM' or Menu.mdl['mdl']=='RAP':
 			Menu.mdl['src'] = 'Twisterdata'
 			return Menu.get_twd()
+		
 	
 		
 def main():
