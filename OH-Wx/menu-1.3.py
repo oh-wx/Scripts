@@ -46,6 +46,10 @@ from datetime import date, timedelta
 #		added H8TADV	"	"	"	"	"
 #		added H7TADV	"	"	"	"	"
 
+### UPDATES - 3/11/2018 ###
+#
+#	get_obs()
+#		re-grouped HGHCHG / H8TADV / H7TADV / H8FRNT / H7FRNT to petig list
 
 
 
@@ -153,7 +157,12 @@ class Menu:
 				   ('500mb','500mb',True),
 				   ('300mb','300mb',True),
 				   ('H5VORT','vadv',True),
-				   ('H3CIRC','ageo',True)]
+				   ('H3CIRC','ageo',True),
+				   ('H8FRNT','8fnt',True),
+				   ('H7FRNT','7fnt',True),
+				   ('H8TADV','tadv',True),
+				   ('H7TADV','7tad',True),
+				   ('HGHCHG','500mb_chg',True)]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
@@ -181,11 +190,7 @@ class Menu:
 				   
 		frozen	= [('SFCTEMP','fztp'),
 				   ('SFCBULB','swbt'),
-				   ('MAXBULB','mxwb'),
-				   ('H8FRNT','8fnt',True),
-				   ('H7FRNT','7fnt',True),
-				   ('H8TADV','tadv',True),
-				   ('H7TADV','7tad',True)]
+				   ('MAXBULB','mxwb')]
 				  
 		severe  = petig + thermo + shear + comp
 		winter  = petig + frozen
@@ -196,7 +201,6 @@ class Menu:
 				   '2':winter,
 				   'D':('DERCHO','dcp'),
 				   'P':('PWAT','pwtr',True),
-				   'C':('HGHCHG','500mb_chg',True),
 				   'M':('MCSPRB','mcsm'),
 				   'H':('HAIL','hail'),
 				   'R':('BR','rgnlrad'),
@@ -472,7 +476,6 @@ class Menu:
 		print( '# R: Base Reflectivity  #' )
 		print( '# V: Visible Satellite  #' )
 		print( '# P: Precipitable Water #' )
-		print( '# C: 12hr 500MB Change	#' )
 		print( '# H: Hail Parameters	#' )
 		print( '# M: MCS Maintenance	#' )
 		print( '# D: Derecho Composite  #' )
