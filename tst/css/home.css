@@ -1,0 +1,32 @@
+/*
+	CSS for Home.html
+*/
+
+body {
+	width: 1200px;
+	margin: 0 auto;
+}
+header, div, footer {
+	border: 1px solid #000;
+}
+footer {
+	clear: both;
+}
+
+#InfoTabsWrapper {
+	float: left;
+	width: 400px;
+	margin-right: 50px;
+}
+#MainTabsWrapper {
+	float: left;
+	width: 700px;
+}
+#DiscPnlWrapper {
+	float: left;
+	width: 290px;
+}
+#DispPnlWrapper {
+	float: right;
+	width: 400px;
+}
