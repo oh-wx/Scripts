@@ -19,7 +19,7 @@ function expand(id) {
 
 function collapse(id) {
 	
-	// reset to origin
+	// reset size
 	$(id).css({
 		height: "0px",
 		width: "0px"});
