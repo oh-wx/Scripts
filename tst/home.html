@@ -3,6 +3,8 @@
 
 <head>
 	<link rel='stylesheet' type='text/css' href='./css/home.css' />
+	<script type='text/javascript' src='./js/home.js'></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -14,11 +16,82 @@
 		Info Tabs
 	</div>
 	<div id='MainTabsWrapper'>
-		<div id='DiscPnlWrapper'>
-			This is a discussion
+		<ul id='MainTabsNav'>
+			<li class='active'>Discussion</li>
+			<li onclick='maintab_sel("#ObsTab")'>Obs</li>
+			<li onclick='maintab_sel("#PBLTab")'>PBL</li>
+			<li onclick='maintab_sel("#UATab")'>UA</li>
+			<li onclick='maintab_sel("#DynTab")'>Dyn</li>
+			<li onclick='maintab_sel("#TrmTab")'>Thermo</li>
+			<li onclick='maintab_sel("#ShrTab")'>Shear</li>
+		</ul>
+		<div id='DiscTab' class='show'>
+			<h3>Discussion</h3>
+			 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in arcu auctor, interdum dolor luctus, commodo est. Curabitur bibendum id ante quis aliquam. Integer hendrerit convallis ipsum, ac ornare lorem laoreet a. Phasellus luctus purus eu lectus vestibulum commodo. Aenean quis rutrum ligula, a dignissim ligula. Pellentesque ornare auctor rutrum. Etiam eget mi egestas, bibendum neque vel, tempus magna. Vivamus felis risus, ornare ac dignissim ut, auctor eget eros. Nam rhoncus augue massa, sagittis volutpat sapien pretium vitae. Sed turpis augue, condimentum finibus aliquam at, rhoncus quis risus. Vivamus placerat sapien non tellus auctor, sed laoreet purus imperdiet. Nulla eget elit et odio rhoncus luctus. Donec vitae justo non lorem bibendum sollicitudin. Integer id vulputate risus. Ut vel diam tempus justo aliquam porttitor quis quis sem. Duis ornare facilisis augue, sed faucibus odio sodales nec.
+			<br />
+			In facilisis euismod viverra. Aenean ut suscipit neque, in laoreet arcu. Suspendisse sagittis, ligula sed condimentum iaculis, mi tortor aliquam quam, vel feugiat massa dui eget diam. Nulla lobortis gravida feugiat. Quisque condimentum semper rutrum. Fusce eleifend tellus odio, vel luctus est venenatis a. In hac habitasse platea dictumst. Pellentesque porta mollis ipsum ut aliquam. Curabitur viverra tincidunt nulla ut pharetra. Praesent finibus porttitor erat in imperdiet. Nam faucibus vel tellus id semper. Morbi nec ex rhoncus, pellentesque enim eget, convallis nulla. Curabitur sit amet porttitor nibh. Suspendisse potenti.
+			<br />
+			Proin ut est sit amet lorem hendrerit euismod. Vivamus eu mauris vitae lorem tempor gravida. In mattis, tellus lobortis laoreet rhoncus, odio purus tristique ligula, mollis convallis magna mi eget leo. Pellentesque fermentum semper mattis. Ut consectetur quam dolor, vel efficitur lacus ultrices vel. Etiam ac ligula non quam ornare pretium sit amet quis nulla. Ut in auctor dui, eu placerat ante. Sed blandit neque vitae nulla commodo aliquet. Aliquam volutpat sed sem sed egestas. Aenean rhoncus sollicitudin bibendum. Vivamus nulla ipsum, dictum ut metus sit amet, dignissim placerat mauris. Aliquam vitae ultrices ex. Fusce viverra vestibulum tortor, ac sollicitudin sapien vehicula eu.
+			<br />
+			Suspendisse et velit id justo consequat porttitor. Praesent eu facilisis velit. Pellentesque mollis tortor in quam imperdiet gravida. Donec sagittis faucibus enim sed convallis. Etiam blandit tortor a magna suscipit dignissim. Phasellus pretium ligula non auctor lobortis. Maecenas malesuada rhoncus bibendum. Donec eu ultricies nulla. Fusce aliquam nisl lectus, at consectetur dui imperdiet eget. Fusce cursus arcu ligula, sit amet ultrices libero tincidunt a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras rutrum metus mauris, non finibus odio molestie a. Morbi lorem nisi, interdum vitae sollicitudin sit amet, molestie sed lacus. In et porta mauris. Cras volutpat justo eros, et malesuada ligula tristique nec.
+			<br />
+			Suspendisse ut massa fermentum, placerat lacus id, tristique dui. Nunc interdum risus vestibulum, pulvinar tortor at, consequat nibh. Sed hendrerit non nisi nec auctor. Nullam ut viverra nibh. Nam elementum ju
 		</div>
-		<div id='DispPnlWrapper'>
-			And here is the relevant display
+		<div id='ObsTab' class='show'>
+			<h3>Surface Observations</h3>
+			<ul>
+				<li onclick='meso_sel("obser")'>Observations</li>	<!-- let's just have sfc dewpt; have OBS tab with OBS and PRS -->
+				<li onclick='meso_sel("press")'>Mean Sea Level Pressure</li>
+				<li onclick='meso_sel("poten")'>Potential Temperature</li>
+			</ul>
+			<!-- <iframe scrolling='no' src='http://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl.gif'></iframe> -->
+		</div>
+		<div id='PBLTab' class='hide'>
+			<h3>Planetary Boundary Layer</h3>
+			<ul>
+				<li onclick='meso_sel("dewpt")'>Surface</li>	<!-- let's just have sfc dewpt; have OBS tab with OBS and PRS -->
+				<li onclick='meso_sel("925mb")'>925mb</li>
+				<li onclick='meso_sel("850mb")'>850mb</li>
+			</ul>
+		</div>
+		<div id='UATab' class='hide'>
+			<h3>Upper Air</h3>
+			<ul>
+				<li onclick='meso_sel("700mb")'>700mb</li>	<!-- let's just have sfc dewpt; have OBS tab with OBS and PRS -->
+				<li onclick='meso_sel("500mb")'>500mb</li>
+				<li onclick='meso_sel("300mb")'>300mb</li>
+			</ul>
+		</div>
+		<div id='DynTab' class='hide'>
+			<h3>Upper Air Dynamics</h3>
+			<ul>
+				<li onclick='meso_sel("700mb")'>700mb</li>	<!-- let's just have sfc dewpt; have OBS tab with OBS and PRS -->
+				<li onclick='meso_sel("500mb")'>500mb</li>
+				<li onclick='meso_sel("300mb")'>300mb</li>
+			</ul>
+		</div>
+		<div id='TrmTab' class='hide'>
+			<h3>Thermodynamics</h3>
+			<ul>
+				<li onclick='meso_sel("700mb")'>700mb</li>	<!-- let's just have sfc dewpt; have OBS tab with OBS and PRS -->
+				<li onclick='meso_sel("500mb")'>500mb</li>
+				<li onclick='meso_sel("300mb")'>300mb</li>
+			</ul>
+		</div>
+		<div id='ShrTab' class='hide'>
+			<h3>Wind Shear</h3>
+			<ul>
+				<li onclick='meso_sel("700mb")'>700mb</li>	<!-- let's just have sfc dewpt; have OBS tab with OBS and PRS -->
+				<li onclick='meso_sel("500mb")'>500mb</li>
+				<li onclick='meso_sel("300mb")'>300mb</li>
+			</ul>
+		</div>
+		<div id='MesoImgWrapper' class='show'>
+			<img id="MesoImg" class='mesoimg' src='http://www.spc.noaa.gov/exper/mesoanalysis/s16/bigsfc/bigsfc.gif' alt='Surface Observations' />
+			<br />
+			<br />
+			<br />
+			<div style='text-align: center'>[IMAGE OF CORRESPONDING PRESSURE LEVEL ON SUPERCELL SCHEMATIC AND SKEW-T EXAMPLE]</div>
 		</div>
 	</div>
 	<footer>

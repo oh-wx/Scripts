@@ -6,27 +6,64 @@ body {
 	width: 1200px;
 	margin: 0 auto;
 }
-header, div, footer {
+header, footer {
 	border: 1px solid #000;
 }
 footer {
 	clear: both;
 }
+ul { 
+	cursor: pointer;
+	list-style-type: none;
+}
+/*iframe {
+	width: 800px;
+	height: 600px;
+	background: #FFF;
+	marginheight: -5px;
+	marginwidth: -5px;
+}*/
+
+.show { display: block; }
+.hide { display: none; }
+.active { border: 3px solid red; }
+.mesoimg {
+	float: right;
+	width: 800px;
+	background: #FFF;
+}
+
 
 #InfoTabsWrapper {
 	float: left;
-	width: 400px;
-	margin-right: 50px;
+	width: 50px;	/* 400px; /* max */
+	margin-right: 10px;
+	
+	border: 1px solid #000;
 }
 #MainTabsWrapper {
 	float: left;
-	width: 700px;
+	width: 1135px;
+	
+	border: 1px solid #000;
 }
-#DiscPnlWrapper {
+#MainTabsNav{
+	margin: 0 auto;
+
+	/*border: 1px solid #000;*/
+}
+#MainTabsNav > li {
+	display: inline;
+	text-align: center;
+	margin-right: 10px;
+	
+	border: 1px solid #000;
+}
+#MainTabsWrapper > div:first-of-type {
 	float: left;
-	width: 290px;
+	width: 330px;
 }
-#DispPnlWrapper {
+#MainTabWrapper > div:not(:first-of-type){
 	float: right;
-	width: 400px;
+	width: 805px;
 }
