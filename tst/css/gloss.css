@@ -1,0 +1,60 @@
+/*
+	Glossary CSS
+*/
+
+body {
+	width: 1000px;
+	margin: 0 auto;
+	
+	height: 5000px;
+}
+footer{
+	clear: both;
+	
+	border: 1px solid #000;
+
+}
+
+
+
+
+#GlossWrapper {
+	float: left;
+	width: 400px;
+	margin-right: 25px;
+	
+	border: 1px solid #000;
+
+}
+#TempPanel {
+	float: left;
+	width: 570px;
+	
+	border: 1px solid #000;
+}
+
+
+.link {
+	font-style: bold;
+	font-size: 10px;
+}
+.hide { display: none; }
+.show { display: block; }
+.ex {
+	position: fixed;
+	z-index: 100;
+	background-color: gray;
+	width: 0px;
+	height: 0px;
+	
+	border: 1px solid #000;
+}
+.close {
+	position: absolute;
+	top: 0;
+	right: 5px;
+	color: red;
+	font-style: bold;
+	font-size: 20px;
+	float: right;
+}

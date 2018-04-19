@@ -10,46 +10,13 @@ from datetime import date, timedelta
 
 ### TO-DO ###
 #
-#	implement get_twd()
+#	implement get_twd(), get_cod()
+#
 #	
 #	update Obs Menu Titles for hazard type
 #
 #	implement grab_data()
 #		unify data struct for obs and mdl
-
-### UPDATES - 7/14/2017 ###
-#
-#	get_obs()
-#		added H8TRANS to hazards
-#		added MIX to thermo
-#		added CRSOVR to hazards
-#
-#	obs_menu()
-#		added 850mb Moist Trans option
-#
-#	get_psu()
-#		banner formatting adjusted
-#
-#	bug fix - removed line: Menu.obs['ini'] = Menu.obs['ini'].zfill(2)
-#			- updated line: path = Menu.REPO + Menu.obs['ini']
-#			- updated write_file(...) to fix path error
-#
-
-### UPDATES - 12/12/2017 ###
-#
-#	get_psu()
-#		@PSU url broken, using >168hr url for EURO
-#
-#	get_obs()
-#		added H8FRNT to frozen params list
-#		added H7FRNT 	"	"	"	"	"
-#		added H8TADV	"	"	"	"	"
-#		added H7TADV	"	"	"	"	"
-
-### UPDATES - 3/11/2018 ###
-#
-#	get_obs()
-#		re-grouped HGHCHG / H8TADV / H7TADV / H8FRNT / H7FRNT to petig list
 
 
 
@@ -162,7 +129,8 @@ class Menu:
 				   ('H7FRNT','7fnt',True),
 				   ('H8TADV','tadv',True),
 				   ('H7TADV','7tad',True),
-				   ('HGHCHG','500mb_chg',True)]
+				   ('HGHCHG','500mb_chg',True),
+				   ('H3VORT','padv',True)]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
@@ -208,7 +176,9 @@ class Menu:
 				   'I':('MLRDEW','tdlr',True),
 				   'L':('MAXLR','maxlr'),
 				   'T':('H8TRAN','tran',True),
-				   'O':('CRSOVR','comp',True)}
+				   'O':('CRSOVR','comp',True),
+				   'S':('STRECH','desp'),
+				   'C':('CANGLE','crit')}
 		
 		# get obs data to build URL
 		sector = sector[Menu.obs['sec']]
@@ -467,7 +437,7 @@ class Menu:
 	
 
 	def obs_menu():
-		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O']
+		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O','S']
 				   
 		print( '#########################' )
 		print( '#     Observations      #' )
@@ -483,6 +453,8 @@ class Menu:
 		print( '# I: Mid LR & Sfc Dewpt #' )
 		print( '# T: 850mb Moist Trans  #' )
 		print( '# O: H8-H5 Cross Over   #' )
+		print( '# S: Low Level Stretch  #' )
+		print( '# C: Critical Angle     #' )
 		print( '#########################' )
 		print()
 		print( 'Select Hazard Type' )

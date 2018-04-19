@@ -1,0 +1,45 @@
+CHANGE LOG
+----------
+
+	menu-1.3.py
+	-----------
+		### UPDATES - 7/14/2017 ###
+		#
+		#	get_obs()
+		#		added H8TRANS to hazards
+		#		added MIX to thermo
+		#		added CRSOVR to hazards
+		#
+		#	obs_menu()
+		#		added 850mb Moist Trans option
+		#
+		#	get_psu()
+		#		banner formatting adjusted
+		#
+		#	bug fix - removed line: Menu.obs['ini'] = Menu.obs['ini'].zfill(2)
+		#			- updated line: path = Menu.REPO + Menu.obs['ini']
+		#			- updated write_file(...) to fix path error
+		#
+
+		### UPDATES - 12/12/2017 ###
+		#
+		#	get_psu()
+		#		@PSU url broken, using >168hr url for EURO
+		#
+		#	get_obs()
+		#		added H8FRNT to frozen params list
+		#		added H7FRNT 	"	"	"	"	"
+		#		added H8TADV	"	"	"	"	"
+		#		added H7TADV	"	"	"	"	"
+
+		### UPDATES - 3/11/2018 ###
+		#
+		#	get_obs()
+		#		re-grouped HGHCHG / H8TADV / H7TADV / H8FRNT / H7FRNT to petig list
+
+		### UPDATES - 4/18/2018 ###
+		#
+		#	get_obs() & obs_menu()
+		#		added H3VORT to petig list
+		#		added STRECH to hazards
+		#		added CANGLE to hazards
