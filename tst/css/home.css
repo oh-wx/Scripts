@@ -15,6 +15,7 @@ footer {
 ul { 
 	cursor: pointer;
 	list-style-type: none;
+	padding: 0px;
 }
 /*iframe {
 	width: 800px;
@@ -32,6 +33,21 @@ ul {
 	width: 800px;
 	background: #FFF;
 }
+.scdiag {
+	float: right;
+	width: 800px;
+	background: #FFF;
+}
+.link {
+	cursor: pointer;
+	text-decoration: none;
+	font-family: Aharoni;
+	color: #FF9933;	
+}
+.link:hover span { 
+	display: inline;
+	color: #FF9933;
+}
 
 
 #InfoTabsWrapper {
@@ -40,6 +56,9 @@ ul {
 	margin-right: 10px;
 	
 	border: 1px solid #000;
+}
+#InfoTabsWrapper > ul {
+	font-size: 10px;
 }
 #MainTabsWrapper {
 	float: left;
@@ -57,7 +76,7 @@ ul {
 	text-align: center;
 	margin-right: 10px;
 	
-	border: 1px solid #000;
+	/*border: 1px solid #000;*/
 }
 #MainTabsWrapper > div:first-of-type {
 	float: left;
