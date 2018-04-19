@@ -55,7 +55,7 @@ from datetime import date, timedelta
 
 class Menu:
 	### GLOBALS ###
-	REPO = 'C:\\Users\\anwalters\\Desktop\\OH-Wx\\DataGrab\\'
+	REPO = 'C:\\Storm_Images\\NEW---TEMP\\DataGrab\\'
 	DATE = datetime.datetime.now()
 	
 	# get init time and format date for Current Obs
