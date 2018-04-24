@@ -23,19 +23,25 @@ from datetime import date, timedelta
 class Menu:
 	### GLOBALS ###
 	REPO = 'C:\\Users\\anwalters\\Desktop\\OH-Wx\\DataGrab\\'
-	DATE = datetime.datetime.now()
+	DATE = None
 	
-	# get init time and format date for Current Obs
-	page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
-	init = str( BeautifulSoup(page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
-	date = DATE.strftime('%Y%m%d')
+	page = None
+	init = None
+	date = None
 	
 	obs = None
 	mdl = None
 	stack = None
 	
-	# set init and date as default, clean stack
+	# initialize all variables, set init and date as default, clean stack
 	def __init__(self):
+		# get init time and format date for Current Obs
+		Menu.DATE = datetime.datetime.now()
+		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
+		Menu.init = str( BeautifulSoup(page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
+		Menu.date = DATE.strftime('%Y%m%d')
+		
+		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
 		Menu.mdl = {'mdl':None, 'ini':None, 'src':None}
 		Menu.stack =[]
@@ -178,7 +184,8 @@ class Menu:
 				   'T':('H8TRAN','tran',True),
 				   'O':('CRSOVR','comp',True),
 				   'S':('STRECH','desp'),
-				   'C':('CANGLE','crit')}
+				   'A':('CANGLE','crit'),
+				   'C':('H8CONV','ddiv',True)}
 		
 		# get obs data to build URL
 		sector = sector[Menu.obs['sec']]
@@ -437,7 +444,7 @@ class Menu:
 	
 
 	def obs_menu():
-		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O','S']
+		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O','S', 'A']
 				   
 		print( '#########################' )
 		print( '#     Observations      #' )
@@ -454,7 +461,8 @@ class Menu:
 		print( '# T: 850mb Moist Trans  #' )
 		print( '# O: H8-H5 Cross Over   #' )
 		print( '# S: Low Level Stretch  #' )
-		print( '# C: Critical Angle     #' )
+		print( '# A: Critical Angle     #' )
+		print( '# C: 850mb Convergence  #' )
 		print( '#########################' )
 		print()
 		print( 'Select Hazard Type' )

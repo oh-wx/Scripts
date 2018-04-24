@@ -14,6 +14,15 @@ CHANGE LOG
 
 	menu-1.3.py
 	-----------
+		### UPDATES - 4/24/2018 ###
+		#
+		#	get_obs() & obs_menu()
+		#		added H8CONV to hazards
+		#
+		#	__init(...)__
+		#		initialize variables inside constructor
+		#
+		
 		### UPDATES - 7/14/2017 ###
 		#
 		#	get_obs()
