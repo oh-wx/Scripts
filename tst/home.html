@@ -3,6 +3,16 @@
 
 <head>
 	<link rel='stylesheet' type='text/css' href='./css/home.css' />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type='text/javascript' src='./js/home.js'></script>
+	
+	
+	<!------for testing only------>
+	<script type='text/javascript'>
+		
+	</script>
+	<!---------------------------->
+	
 </head>
 
 <body>
@@ -11,19 +21,191 @@
 	</header>
 	
 	<div id='InfoTabsWrapper'>
-		Info Tabs
-	</div>
-	<div id='MainTabsWrapper'>
-		<div id='DiscPnlWrapper'>
-			This is a discussion
+		<ul id='InfoTabsNav'>
+			<li>What's New</li>
+			<li>Current Wx</li>
+			<li>Current Radar</li>
+			<li>Tutorials</li>
+			<li>Glosssary</li>
+		</ul>
+		<div id='BlogTab' class=''>
+			<h3>What's New</h3>
+			<p>Here are some new features of the application and what's to come!</p>
 		</div>
-		<div id='DispPnlWrapper'>
-			And here is the relevant display
+		<div id='ForeTab' class=''>
+			<h3>Current Weather</h3>
+			<p>Your current weather conditions are....</p>
+		</div>
+		<div id='RadrTab' class=''>
+			<h3>Current Radar</h3>
+			<img src='' alt='Current Radar' />
+		</div>
+		<div id='TutrTab' class=''>
+			<h3>Tutorials</h3>
+			<p>Learn about the structure of weather systems and different storm types!</p>
+		</div>
+		<div id='GlssTab' class=''>
+			<h3>Wx Terms and Definitions</h3>
+			<dl id='GlossList'>
+				<dt>Heights</dt>
+				<dd>
+					This is a description of pressure level heights.
+					<div id='ExHeights' class="ex hide">
+						A perfect Example.
+						<br /><a class='close' onclick="collapse('#ExHeights')">X</a><br />
+					</div>
+					<br /><a class='link' onclick="expand('#ExHeights')">See Example</a><br />
+				</dd>
+				<dt>Differential Cyclonic Vorticity Advection</dt>
+				<dd>
+					This is a description of DCVA.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Mesocyclone</dt>
+				<dd>
+					This is a description of a mesocyclone.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Elevated Mixed Layer</dt>
+				<dd>
+					This is a description of the Elevated Mixed Layer (EML).
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Lapse Rate</dt>
+				<dd>
+					This is a description of Lapse Rate.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Dew Point Temperature</dt>
+				<dd>
+					This is a description of the Dew Point temperature.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Wet Bulb Temperature</dt>
+				<dd>
+					This is a description of the Wet Bulb temperature.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Planetary Boundary Layer</dt>
+				<dd>
+					This is description of the Planetary Boundary Layer (PBL).
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Warm Sector</dt>
+				<dd>
+					This is description of the Warm Sector.
+					<div class='ex hide'>
+					</div>
+				</dd>
+			</dl>
+		</div><!-- end GlossWrapper -->
+	</div><!--  end InfoTabsWrapper -->
+	<div id='MainTabsWrapper'>
+		<ul id='MainTabsNav'>
+			<li>Discussion</li>
+			<li>Obs</li>
+			<li>PBL</li>
+			<li>UA</li>
+			<li>Dyn</li>
+			<li>Thermo</li>
+			<li>Shear</li>
+		</ul>
+		<div id='DiscTab' class='default content'>
+			<h3>Discussion</h3>
+			 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in arcu auctor, interdum dolor luctus, commodo est. Curabitur bibendum id ante quis aliquam. Integer hendrerit convallis ipsum, ac ornare lorem laoreet a. Phasellus luctus purus eu lectus vestibulum commodo. Aenean quis rutrum ligula, a dignissim ligula. Pellentesque ornare auctor rutrum. Etiam eget mi egestas, bibendum neque vel, tempus magna. <a class='link' id='UAA-700mb'><span>[see </span>700mb chart<span>]</span></a>  Vivamus felis risus, ornare ac dignissim ut, auctor eget eros. Nam rhoncus augue massa, sagittis volutpat sapien pretium vitae. Sed turpis augue, condimentum finibus aliquam at, rhoncus quis risus. Vivamus placerat sapien non tellus auctor, sed laoreet purus imperdiet. Nulla eget elit et odio rhoncus luctus. <a class='link' id='PBL-dewpt'><span>[see </span>dew point chart<span>]</span></a>  Donec vitae justo non lorem bibendum sollicitudin. Integer id vulputate risus. Ut vel diam tempus justo aliquam porttitor quis quis sem. Duis ornare facilisis augue, sed faucibus odio sodales nec.
+			<br />
+			In facilisis euismod viverra. Aenean ut suscipit neque, in laoreet arcu. Suspendisse sagittis, ligula sed condimentum iaculis, mi tortor aliquam quam, vel feugiat massa dui eget diam. Nulla lobortis gravida feugiat.  <a class='link' id='UAA-700mb'><span>[see </span>700mb chart<span>]</span></a> Quisque condimentum semper rutrum. Fusce eleifend tellus odio, vel luctus est venenatis a. In hac habitasse platea dictumst. Pellentesque porta mollis ipsum ut aliquam. Curabitur viverra tincidunt nulla ut pharetra. Praesent finibus porttitor erat in imperdiet. Nam faucibus vel tellus id semper. Morbi nec ex rhoncus, pellentesque enim eget, convallis nulla. Curabitur sit amet porttitor nibh. Suspendisse potenti.
+			<br />
+			Proin ut est sit amet lorem hendrerit euismod. Vivamus eu mauris vitae lorem tempor gravida. In mattis, tellus lobortis laoreet rhoncus, odio purus tristique ligula, mollis convallis magna mi eget leo. Pellentesque fermentum semper mattis. Ut consectetur quam dolor, vel efficitur lacus ultrices vel. Etiam ac ligula non quam ornare pretium sit amet quis nulla. Ut in auctor dui, eu placerat ante. Sed blandit neque vitae nulla commodo aliquet. Aliquam volutpat sed sem sed egestas. Aenean rhoncus sollicitudin bibendum. Vivamus nulla ipsum, dictum ut metus sit amet, dignissim placerat mauris. Aliquam vitae ultrices ex. Fusce viverra vestibulum tortor, ac sollicitudin sapien vehicula eu.
+			<br />
+			Suspendisse et velit id justo consequat porttitor. Praesent eu facilisis velit. Pellentesque mollis tortor in quam imperdiet gravida. Donec sagittis faucibus enim sed convallis. Etiam blandit tortor a magna suscipit dignissim. Phasellus pretium ligula non auctor lobortis. Maecenas malesuada rhoncus bibendum. Donec eu ultricies nulla. Fusce aliquam nisl lectus, at consectetur dui imperdiet eget. Fusce cursus arcu ligula, sit amet ultrices libero tincidunt a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras rutrum metus mauris, non finibus odio molestie a. Morbi lorem nisi, interdum vitae sollicitudin sit amet, molestie sed lacus. In et porta mauris. Cras volutpat justo eros, et malesuada ligula tristique nec.
+			<br />
+			Suspendisse ut massa fermentum, placerat lacus id, tristique dui. Nunc interdum risus vestibulum, pulvinar tortor at, consequat nibh. Sed hendrerit non nisi nec auctor. Nullam ut viverra nibh. Nam elementum ju
+		</div>
+		<div id='ObsTab' class='default content'>
+			<h3>Surface Observations</h3>
+			<ul>
+				<li id='obser'>Observations</li>	<!-- let's just have sfc dewpt; have OBS tab with OBS and PRS -->
+				<li id='press'>Mean Sea Level Pressure</li>
+				<li id='poten'>Potential Temperature</li>
+			</ul>
+			<!-- <iframe scrolling='no' src='http://www.spc.noaa.gov/exper/mesoanalysis/s16/pmsl/pmsl.gif'></iframe> -->
+		</div>
+		<div id='PBLTab' class='content'>
+			<h3>Planetary Boundary Layer</h3>
+			<ul>
+				<li id='dewpt'>Surface</li>
+				<li id='925mb'>925mb</li>
+				<li id='850mb'>850mb</li>
+			</ul>
+		</div>
+		<div id='UAATab' class='content'>
+			<h3>Upper Air</h3>
+			<ul>
+				<li id='700mb'>700mb</li>
+				<li id='500mb'>500mb</li>
+				<li id='300mb'>300mb</li>
+			</ul>
+		</div>
+		<div id='DynTab' class='content'>
+			<h3>Upper Air Dynamics</h3>
+			<ul>
+				<li id='h8frt'>H8 Frontogenesis</li>
+				<li id='h8adv'>H8 Temp Advection</li>
+				<li id='h7frt'>H7 Frontogenesis</li>
+				<li id='h7adv'>H7 Temp Advection</li>
+				<li id='h5chg'>H5 Height Falls</li>
+				<li id='h5vrt'>H5 Vorticity & DCVA</li>
+				<li id='h3crc'>H3 Circulation & Lift</li>
+			</ul>
+		</div>
+		<div id='ThmTab' class='content'>
+			<h3>Thermodynamics</h3>
+			<ul>
+				<li id='sbcap'>Surface CAPE & CIN</li>
+				<li id='mlcap'>Mixed Layer CAPE & CIN</li>
+				<li id='mucap'>Most Unstable CAPE & CIN</li>
+				<li id='mllap'>700-500mb Lapse Rate</li>
+				<li id='lllap'>0-3Km Lapse Rate</li>
+				<li id='lclht'>Lifting Condensation Level</li>
+				<li id='lfcht'>Level of Free Convection</li>
+			</ul>
+		</div>
+		<div id='ShrTab' class='content'>
+			<h3>Wind Shear</h3>
+			<ul>
+				<li id='1kmsh'>0-1Km Wind Shear Vector</li>
+				<li id='6kmsh'>0-6Km Wind Shear Vector</li>
+				<li id='8kmsh'>0-8Km Wind Shear Vector</li>
+				<li id='911sh'>9-11Km Storm Relative Winds</li>
+				<li id='effsh'>Effective Wind Shear</li>
+				<li id='1kmsr'>0-1Km Storm Relative Helicity</li>
+				<li id='3kmsr'>0-3Km Storm Relative Helicity</li>
+				<li id='effsr'>Effective Storm Relative Helicity</li>
+				<li id='sbvrt'>Surface Vertical Vorticity</li>
+			</ul>
+		</div>
+		<div id='MesoImgWrapper' class='default content'>
+			<img id="MesoImg" class='mesoimg' src='http://www.spc.noaa.gov/exper/mesoanalysis/s16/bigsfc/bigsfc.gif' alt='Surface Observations' />
+			<br />
+			<br />
+			<br />
+			<!-- <div style='text-align: center'>[IMAGE OF CORRESPONDING PRESSURE LEVEL ON SUPERCELL SCHEMATIC AND SKEW-T EXAMPLE]</div> -->
+			<img id='SCDiagram' class='scdiag' src='./img/sfc_highlight.png' alt='Supercell and Skew-T Diagram' />
 		</div>
 	</div>
 	<footer>
 		References and Links
 	</footer>
 </body>
-
+<script type='text/javascript'>
+	set_defaults();
+</script>
 </html>

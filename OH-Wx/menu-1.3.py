@@ -10,65 +10,43 @@ from datetime import date, timedelta
 
 ### TO-DO ###
 #
-#	implement get_twd()
+#	implement get_twd(), get_cod()
+#
 #	
 #	update Obs Menu Titles for hazard type
 #
 #	implement grab_data()
 #		unify data struct for obs and mdl
 
-### UPDATES - 7/14/2017 ###
-#
-#	get_obs()
-#		added H8TRANS to hazards
-#		added MIX to thermo
-#		added CRSOVR to hazards
-#
-#	obs_menu()
-#		added 850mb Moist Trans option
-#
-#	get_psu()
-#		banner formatting adjusted
-#
-#	bug fix - removed line: Menu.obs['ini'] = Menu.obs['ini'].zfill(2)
-#			- updated line: path = Menu.REPO + Menu.obs['ini']
-#			- updated write_file(...) to fix path error
-#
-
-### UPDATES - 12/12/2017 ###
-#
-#	get_psu()
-#		@PSU url broken, using >168hr url for EURO
-#
-#	get_obs()
-#		added H8FRNT to frozen params list
-#		added H7FRNT 	"	"	"	"	"
-#		added H8TADV	"	"	"	"	"
-#		added H7TADV	"	"	"	"	"
-
-### UPDATES - 3/11/2018 ###
-#
-#	get_obs()
-#		re-grouped HGHCHG / H8TADV / H7TADV / H8FRNT / H7FRNT to petig list
-
 
 
 class Menu:
 	### GLOBALS ###
+<<<<<<< HEAD
 	REPO = 'C:\\Storm_Images\\NEW---TEMP\\DataGrab\\'
 	DATE = datetime.datetime.now()
+=======
+	REPO = 'C:\\Users\\anwalters\\Desktop\\OH-Wx\\DataGrab\\'
+	DATE = None
+>>>>>>> 8444f9b39b079c15b9e29a419686408925533f3e
 	
-	# get init time and format date for Current Obs
-	page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
-	init = str( BeautifulSoup(page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
-	date = DATE.strftime('%Y%m%d')
+	page = None
+	init = None
+	date = None
 	
 	obs = None
 	mdl = None
 	stack = None
 	
-	# set init and date as default, clean stack
+	# initialize all variables, set init and date as default, clean stack
 	def __init__(self):
+		# get init time and format date for Current Obs
+		Menu.DATE = datetime.datetime.now()
+		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
+		Menu.init = str( BeautifulSoup(page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
+		Menu.date = DATE.strftime('%Y%m%d')
+		
+		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
 		Menu.mdl = {'mdl':None, 'ini':None, 'src':None}
 		Menu.stack =[]
@@ -162,7 +140,8 @@ class Menu:
 				   ('H7FRNT','7fnt',True),
 				   ('H8TADV','tadv',True),
 				   ('H7TADV','7tad',True),
-				   ('HGHCHG','500mb_chg',True)]
+				   ('HGHCHG','500mb_chg',True),
+				   ('H3VORT','padv',True)]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
@@ -208,7 +187,10 @@ class Menu:
 				   'I':('MLRDEW','tdlr',True),
 				   'L':('MAXLR','maxlr'),
 				   'T':('H8TRAN','tran',True),
-				   'O':('CRSOVR','comp',True)}
+				   'O':('CRSOVR','comp',True),
+				   'S':('STRECH','desp'),
+				   'A':('CANGLE','crit'),
+				   'C':('H8CONV','ddiv',True)}
 		
 		# get obs data to build URL
 		sector = sector[Menu.obs['sec']]
@@ -467,7 +449,7 @@ class Menu:
 	
 
 	def obs_menu():
-		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O']
+		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O','S', 'A']
 				   
 		print( '#########################' )
 		print( '#     Observations      #' )
@@ -483,6 +465,9 @@ class Menu:
 		print( '# I: Mid LR & Sfc Dewpt #' )
 		print( '# T: 850mb Moist Trans  #' )
 		print( '# O: H8-H5 Cross Over   #' )
+		print( '# S: Low Level Stretch  #' )
+		print( '# A: Critical Angle     #' )
+		print( '# C: 850mb Convergence  #' )
 		print( '#########################' )
 		print()
 		print( 'Select Hazard Type' )
