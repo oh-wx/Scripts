@@ -40,7 +40,7 @@ class Menu:
 		Menu.DATE = datetime.datetime.now()
 		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
 		Menu.init = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
-		Menu.date = DATE.strftime('%Y%m%d')
+		Menu.date = Menu.DATE.strftime('%Y%m%d')
 		
 		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
