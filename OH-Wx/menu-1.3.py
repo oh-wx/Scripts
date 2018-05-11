@@ -22,13 +22,9 @@ from datetime import date, timedelta
 
 class Menu:
 	### GLOBALS ###
-<<<<<<< HEAD
+
 	REPO = 'C:\\Storm_Images\\NEW---TEMP\\DataGrab\\'
-	DATE = datetime.datetime.now()
-=======
-	REPO = 'C:\\Users\\anwalters\\Desktop\\OH-Wx\\DataGrab\\'
 	DATE = None
->>>>>>> 8444f9b39b079c15b9e29a419686408925533f3e
 	
 	page = None
 	init = None
