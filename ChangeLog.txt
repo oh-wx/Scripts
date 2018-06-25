@@ -18,6 +18,15 @@ CHANGE LOG
 		#	sec_menu() ;formerly haz_menu()
 		#		allow for multiple sectors; need error handling
 		#		moved sector dictionary from get_obs() to sec_menu()
+		#
+		#	obs_menu()
+		#		added MLCSHR to optional hazards
+		#		added MSTRCN to petigre dict
+		
+		### UPDATES - 6/25/2018 ###
+		#
+		#	get_obs()
+		#		added THETAE to thermo dict
 	
 	
 	menu-1.3.py

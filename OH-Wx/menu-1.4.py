@@ -153,7 +153,8 @@ class Menu:
 				   ('H8TADV','tadv',True),
 				   ('H7TADV','7tad',True),
 				   ('HGHCHG','500mb_chg',True),
-				   ('H3VORT','padv',True)]
+				   ('H3VORT','padv',True),
+				   ('MSTRCN','mcon')]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
@@ -162,7 +163,8 @@ class Menu:
 				   ('LLR','lllr',True),
 				   ('LCL','lclh',True),
 				   ('LFC','lfch',True),
-				   ('MIX','mxth',True)]
+				   ('MIX','mxth',True),
+				   ('THETAE','thea',True)]
 				   
 		shear	= [('6KmSHR','shr6'),
 				   ('8KmSHR','shr8'),
@@ -201,7 +203,8 @@ class Menu:
 				   'O':('CRSOVR','comp',True),
 				   'S':('STRECH','desp'),
 				   'A':('CANGLE','crit'),
-				   'C':('H8CONV','ddiv',True)}
+				   'C':('H8CONV','ddiv',True),
+				   'E':('MLCSHR','mlcp_eshr',True)}
 		
 		# get obs data to build URL
 		current = True if Menu.obs['ini'] == '' else False
@@ -260,9 +263,9 @@ class Menu:
 	def get_psu():
 		banner = ''
 		banner = banner.ljust(len(Menu.mdl['mdl'])+4,'#')
-		print( banner ) #if Menu.mdl['mdl']=='EURO' else print( '############' )	# stupid formatting conditionals
+		print( banner )
 		print( '# {mdl} ~{init} #'.format(mdl=Menu.mdl['mdl'], init=Menu.mdl['ini']) )
-		print( banner ) #if Menu.mdl['mdl']=='EURO' else print( '############' )	# stupid formatting conditionals
+		print( banner )
 		print( '\nEnter Forecast Hours\n' )
 		
 		# get Model data to build URL
@@ -460,7 +463,7 @@ class Menu:
 		
 
 	def obs_menu():
-		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O','S', 'A']
+		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O','S', 'A', 'E']
 				   
 		print( '#########################' )
 		print( '#     Observations      #' )
@@ -479,6 +482,7 @@ class Menu:
 		print( '# S: Low Level Stretch  #' )
 		print( '# A: Critical Angle     #' )
 		print( '# C: 850mb Convergence  #' )
+		print( '# E: Eff Shr & MLCAPE   #' )
 		print( '#########################' )
 		print()
 		print( 'Select Hazard Type' )
