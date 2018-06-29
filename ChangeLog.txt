@@ -13,6 +13,11 @@ CHANGE LOG
 		
 	menu-1.4.py
 	-----------
+		### UPDATES - 6/29/2018 ###
+		#
+		#	sec_menu()
+		#		added N. Plains region
+		
 		### UPDATES - 5/24/2018 ###
 		#
 		#	sec_menu() ;formerly haz_menu()

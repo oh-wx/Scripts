@@ -526,7 +526,8 @@ class Menu:
 				   'SE':['SE','s18'],
 				   'US':['US','s19'],
 				   'MW':['MW','s20'],
-				   'CP':['CP','s14']}
+				   'CP':['CP','s14'],
+				   'NP':['NP','s13']}
 		sectors = []
 
 		print( '#############' )
@@ -546,6 +547,7 @@ class Menu:
 		print( '# Northeast - NE   #' )
 		print( '# Southeast - SE   #' )
 		print( '# E. Coast  - EC   #' )
+		print( '# N. Plains - NP   #' )
 		print( '####################' )
 
 		'''sel = Menu.show_menu(options)
