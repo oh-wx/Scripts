@@ -32,6 +32,15 @@ CHANGE LOG
 		#
 		#	get_obs()
 		#		added THETAE to thermo dict
+		
+		### UPDATES - 9/04/2018 ###
+		#
+		#	get_obs()
+		#		added H8TRANS to petig
+		#		added H9TRANS to petig
+		#
+		#	obs_menu()
+		#		removed H8TRANS from hazards list
 	
 	
 	menu-1.3.py

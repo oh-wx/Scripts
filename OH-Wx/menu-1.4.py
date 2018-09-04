@@ -154,7 +154,9 @@ class Menu:
 				   ('H7TADV','7tad',True),
 				   ('HGHCHG','500mb_chg',True),
 				   ('H3VORT','padv',True),
-				   ('MSTRCN','mcon')]
+				   ('MSTRCN','mcon'),
+				   ('H8TRAN','tran',True),
+				   ('H9TRAN','tran_925',True)]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
@@ -199,7 +201,6 @@ class Menu:
 				   'V':('VISSAT','1kmv'),
 				   'I':('MLRDEW','tdlr',True),
 				   'L':('MAXLR','maxlr'),
-				   'T':('H8TRAN','tran',True),
 				   'O':('CRSOVR','comp',True),
 				   'S':('STRECH','desp'),
 				   'A':('CANGLE','crit'),
@@ -463,7 +464,7 @@ class Menu:
 		
 
 	def obs_menu():
-		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O','S', 'A', 'E']
+		options = ['1','2','9','R','V','P','C','H','M','D','L','I','O','S', 'A', 'E']
 				   
 		print( '#########################' )
 		print( '#     Observations      #' )
@@ -477,7 +478,6 @@ class Menu:
 		print( '# D: Derecho Composite  #' )
 		print( '# L: Max Lapse Rate     #' )
 		print( '# I: Mid LR & Sfc Dewpt #' )
-		print( '# T: 850mb Moist Trans  #' )
 		print( '# O: H8-H5 Cross Over   #' )
 		print( '# S: Low Level Stretch  #' )
 		print( '# A: Critical Angle     #' )
