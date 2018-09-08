@@ -156,7 +156,8 @@ class Menu:
 				   ('H3VORT','padv',True),
 				   ('MSTRCN','mcon'),
 				   ('H8TRAN','tran',True),
-				   ('H9TRAN','tran_925',True)]
+				   ('H9TRAN','tran_925',True),
+				   ('H9FRNT','9fnt')]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
