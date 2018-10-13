@@ -177,7 +177,8 @@ class Menu:
 				   ('3KmSRH','srh3'),
 				   ('1KmSRH','srh1'),
 				   ('9-11KmSHR','ulsr'),
-				   ('SBVORT','dvvr',True)]
+				   ('SBVORT','dvvr',True),
+				   ('3KmSHR','shr3')]
 				   
 		comp	= [('SCCOMP','scp'),
 				   ('SIGTOR','stpc'),

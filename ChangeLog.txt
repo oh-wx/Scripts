@@ -13,6 +13,11 @@ CHANGE LOG
 		
 	menu-1.4.py
 	-----------
+		### UPDATES - 10/12/2018 ###
+		#
+		#	get_obs()
+		#		added 3KmSHR to petig
+		
 		### UPDATES - 9/07/2018 ###
 		#
 		#	get_obs()
