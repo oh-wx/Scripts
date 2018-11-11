@@ -189,8 +189,8 @@ class Menu:
 				   ('SFCBULB','swbt'),
 				   ('MAXBULB','mxwb')]
 				  
-		severe  = petig + thermo + shear + comp
-		winter  = petig + frozen
+		severe  = thermo + shear + comp
+		winter  = frozen
 		
 		# dictionaries for Obs Menu selection
 		hazard	= {'1':severe,
@@ -214,17 +214,26 @@ class Menu:
 		archive = True if (Menu.DATE - Menu.obs['day']).total_seconds() > 432000 else False
 		past = Menu.obs['day'].strftime('%y%m%d')
 		formdate = Menu.obs['day'].strftime('%Y%m%d')
-		parameter = []
-		popped = False
+		parameter = petig	# assign petigre data as default params
+		#popped = False
 		
 		if not Menu.obs['ini']=='':
 			Menu.obs['ini'] = Menu.obs['ini'].zfill(2)		# zero fill init
 		
 		
+		# !!! ERRORS WITH MULTIPLE DEFAULT LISTS; I.E. WINTER AND SEVERE - QUICK FIX BELOW !!!
+		
 		# build parameter list
 		if Menu.obs['haz'][0]=='1' or Menu.obs['haz'][0]=='2':
-			parameter = hazard[Menu.obs['haz'][0]]		# assign default list to parameter for append below
-			popped = True								
+			parameter.append( hazard[Menu.obs['haz'][0]] )		# assign default list to parameter for append below
+			Menu.obs['haz'].pop(1)
+			#popped = True
+		if Menu.obs['haz'][0]=='1' or Menu.obs['haz'][0]=='2':
+			parameter.append( hazard[Menu.obs['haz'][0]] )		# assign default list to parameter for append below
+			Menu.obs['haz'].pop(1)
+			#popped = True		
+		
+		# !!! ^^NEEDS TO BE FIXED, REPEATED CODE^^ !!!
 		
 		# if default list exists from above, skip it
 		for item in Menu.obs['haz'][1:] if popped else Menu.obs['haz']:

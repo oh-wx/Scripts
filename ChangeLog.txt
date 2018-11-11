@@ -13,6 +13,12 @@ CHANGE LOG
 		
 	menu-1.4.py
 	-----------
+		### UPDATES - 11/11/2018 ###
+		#
+		#	get_obs()
+		#		set default parameters to petig; removed petig from severe and winter lists
+		#		changed default list append operations, needs to be improved
+				
 		### UPDATES - 10/12/2018 ###
 		#
 		#	get_obs()
@@ -51,8 +57,7 @@ CHANGE LOG
 		#
 		#	get_obs()
 		#		added THETAE to thermo dict
-		
-		
+				
 	
 	
 	menu-1.3.py
