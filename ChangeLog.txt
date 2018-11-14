@@ -17,7 +17,7 @@ CHANGE LOG
 		#
 		#	get_obs()
 		#		set default parameters to petig; removed petig from severe and winter lists
-		#		changed default list append operations, needs to be improved
+		#		changed parameter list append operations
 				
 		### UPDATES - 10/12/2018 ###
 		#

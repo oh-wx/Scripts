@@ -215,30 +215,18 @@ class Menu:
 		past = Menu.obs['day'].strftime('%y%m%d')
 		formdate = Menu.obs['day'].strftime('%Y%m%d')
 		parameter = petig	# assign petigre data as default params
-		#popped = False
 		
 		if not Menu.obs['ini']=='':
 			Menu.obs['ini'] = Menu.obs['ini'].zfill(2)		# zero fill init
-		
-		
-		# !!! ERRORS WITH MULTIPLE DEFAULT LISTS; I.E. WINTER AND SEVERE - QUICK FIX BELOW !!!
-		
-		# build parameter list
-		if Menu.obs['haz'][0]=='1' or Menu.obs['haz'][0]=='2':
-			parameter.append( hazard[Menu.obs['haz'][0]] )		# assign default list to parameter for append below
-			Menu.obs['haz'].pop(1)
-			#popped = True
-		if Menu.obs['haz'][0]=='1' or Menu.obs['haz'][0]=='2':
-			parameter.append( hazard[Menu.obs['haz'][0]] )		# assign default list to parameter for append below
-			Menu.obs['haz'].pop(1)
-			#popped = True		
-		
-		# !!! ^^NEEDS TO BE FIXED, REPEATED CODE^^ !!!
-		
-		# if default list exists from above, skip it
-		for item in Menu.obs['haz'][1:] if popped else Menu.obs['haz']:
-			parameter.append(hazard[item])
 
+		# build parameter list
+		for item in Menu.obs['haz']:
+			# issues concating tuple list and dictionary tuple
+			if item=='1' or item=='2':
+				parameter += hazard[item]
+			else:
+				parameter.append( hazard[item] )
+			
 		# grab data!
 		for s in Menu.obs['sec']:
 			for i in range(len(parameter)):
