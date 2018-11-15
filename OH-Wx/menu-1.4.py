@@ -167,7 +167,8 @@ class Menu:
 				   ('LCL','lclh',True),
 				   ('LFC','lfch',True),
 				   ('MIX','mxth',True),
-				   ('THETAE','thea',True)]
+				   ('THETAE','thea',True),
+				   ('MIXAVG','mixr',True)]
 				   
 		shear	= [('6KmSHR','shr6'),
 				   ('8KmSHR','shr8'),
