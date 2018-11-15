@@ -23,6 +23,9 @@ CHANGE LOG
 		#		changed parameter list append operations
 		#		added MIXAVG to thermo
 		#		changed fyle name to use SPCdate
+		#
+		#	aut_menu()
+		#		included SPCdate to grab proper date if automation runs into new day
 				
 		### UPDATES - 10/12/2018 ###
 		#
