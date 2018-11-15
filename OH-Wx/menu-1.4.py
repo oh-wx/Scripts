@@ -47,7 +47,6 @@ class Menu:
 		Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
 		Menu.SPCdate = "20"+Menu.SPCdate.split("/")[2]+Menu.SPCdate.split("/")[0]+Menu.SPCdate.split("/")[1]
 		
-		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
 		Menu.mdl = {'mdl':None, 'ini':None, 'src':None}
 		Menu.stack =[]
