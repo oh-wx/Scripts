@@ -23,14 +23,9 @@ import time
 
 class Menu:
 	### GLOBALS ###
-<<<<<<< HEAD
-	REPO = 'C:\\Storm_Images\\NEW---TEMP\\DataGrab\\'
-	DATE = datetime.datetime.now()
-=======
 
 	REPO = 'C:\\Storm_Images\\NEW---TEMP\\DataGrab\\'
 	DATE = None
->>>>>>> 60f64adb0e683d8809240437ea771d3dad20c64e
 	
 	page = None
 	init = None
@@ -158,7 +153,11 @@ class Menu:
 				   ('H8TADV','tadv',True),
 				   ('H7TADV','7tad',True),
 				   ('HGHCHG','500mb_chg',True),
-				   ('H3VORT','padv',True)]
+				   ('H3VORT','padv',True),
+				   ('MSTRCN','mcon'),
+				   ('H8TRAN','tran',True),
+				   ('H9TRAN','tran_925',True),
+				   ('H9FRNT','9fnt')]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
@@ -167,7 +166,9 @@ class Menu:
 				   ('LLR','lllr',True),
 				   ('LCL','lclh',True),
 				   ('LFC','lfch',True),
-				   ('MIX','mxth',True)]
+				   ('MIX','mxth',True),
+				   ('THETAE','thea',True),
+				   ('MIXAVG','mixr',True)]
 				   
 		shear	= [('6KmSHR','shr6'),
 				   ('8KmSHR','shr8'),
@@ -177,7 +178,8 @@ class Menu:
 				   ('3KmSRH','srh3'),
 				   ('1KmSRH','srh1'),
 				   ('9-11KmSHR','ulsr'),
-				   ('SBVORT','dvvr',True)]
+				   ('SBVORT','dvvr',True),
+				   ('3KmSHR','shr3')]
 				   
 		comp	= [('SCCOMP','scp'),
 				   ('SIGTOR','stpc'),
@@ -188,11 +190,10 @@ class Menu:
 				   ('SFCBULB','swbt'),
 				   ('MAXBULB','mxwb')]
 				  
-		severe  = petig + thermo + shear + comp
-		winter  = petig + frozen
+		severe  = thermo + shear + comp
+		winter  = frozen
 		
 		# dictionaries for Obs Menu selection
-		sector  = {'SP':'s15','NE':'s16','EC':'s17','SE':'s18','US':'s19','MW':'s20','CP':'s14'}
 		hazard	= {'1':severe,
 				   '2':winter,
 				   'D':('DERCHO','dcp'),
@@ -203,72 +204,69 @@ class Menu:
 				   'V':('VISSAT','1kmv'),
 				   'I':('MLRDEW','tdlr',True),
 				   'L':('MAXLR','maxlr'),
-				   'T':('H8TRAN','tran',True),
 				   'O':('CRSOVR','comp',True),
 				   'S':('STRECH','desp'),
 				   'A':('CANGLE','crit'),
-				   'C':('H8CONV','ddiv',True)}
+				   'C':('H8CONV','ddiv',True),
+				   'E':('MLCSHR','mlcp_eshr',True)}
 		
 		# get obs data to build URL
-		sector = sector[Menu.obs['sec']]
 		current = True if Menu.obs['ini'] == '' else False
 		archive = True if (Menu.DATE - Menu.obs['day']).total_seconds() > 432000 else False
 		past = Menu.obs['day'].strftime('%y%m%d')
 		formdate = Menu.obs['day'].strftime('%Y%m%d')
-		parameter = []
-		popped = False
+		parameter = petig	# assign petigre data as default params
 		
 		if not Menu.obs['ini']=='':
 			Menu.obs['ini'] = Menu.obs['ini'].zfill(2)		# zero fill init
-		
-		
+
 		# build parameter list
-		if Menu.obs['haz'][0]=='1' or Menu.obs['haz'][0]=='2':
-			parameter = hazard[Menu.obs['haz'][0]]		# assign default list to parameter for append below
-			popped = True								
-		
-		# if default list exists from above, skip it
-		for item in Menu.obs['haz'][1:] if popped else Menu.obs['haz']:
-			parameter.append(hazard[item])
-
-		# grab data!
-		for i in range(len(parameter)):
-			if archive:
-				url = 'http://www.spc.noaa.gov/exper/ma_archive/images_s4/{date}/{init}_{param}'.format(date=formdate, init=Menu.obs['ini'], param=parameter[i][1])
+		for item in Menu.obs['haz']:
+			# issues concating tuple list and dictionary tuple
+			if item=='1' or item=='2':
+				parameter += hazard[item]
 			else:
-				url = 'http://www.spc.noaa.gov/exper/mesoanalysis/{sector}/{param}/'.format(sector=sector, param=parameter[i][1])
+				parameter.append( hazard[item] )
 			
-				if current:
-					url += parameter[i][1]
-					
-					# less ugly conditional for filled color images
-					if len(parameter[i]) == 3:
-						url += '_sf'
-						
+		# grab data!
+		for s in Menu.obs['sec']:
+			for i in range(len(parameter)):
+				if archive:
+					url = 'http://www.spc.noaa.gov/exper/ma_archive/images_s4/{date}/{init}_{param}'.format(date=formdate, init=Menu.obs['ini'], param=parameter[i][1])
 				else:
-					# must use different URL for Past OBS, BR, and VISSAT
-					if parameter[i][0] == 'OBS':
-						url += 'sfc_' + past + '_' + Menu.obs['ini'] + '00'
-					elif parameter[i][0] == 'BR':
-						url += 'rad_' + formdate + '_' + Menu.obs['ini'] + '00'
-					elif parameter[i][0] == 'VISSAT':
-						url += 'vis_' + formdate + '_' + Menu.obs['ini'] + '00'
+					url = 'http://www.spc.noaa.gov/exper/mesoanalysis/{sector}/{param}/'.format(sector=s[1], param=parameter[i][1])
+				
+					if current:
+						url += parameter[i][1]
+						
+						# less ugly conditional for filled color images
+						if len(parameter[i]) == 3:
+							url += '_sf'
+							
 					else:
-						url += parameter[i][1] + '_' + past + Menu.obs['ini']
+						# must use different URL for Past OBS, BR, and VISSAT
+						if parameter[i][0] == 'OBS':
+							url += 'sfc_' + past + '_' + Menu.obs['ini'] + '00'
+						elif parameter[i][0] == 'BR':
+							url += 'rad_' + formdate + '_' + Menu.obs['ini'] + '00'
+						elif parameter[i][0] == 'VISSAT':
+							url += 'vis_' + formdate + '_' + Menu.obs['ini'] + '00'
+						else:
+							url += parameter[i][1] + '_' + past + Menu.obs['ini']
 
-			url += '.gif'
-			
-			fyle = parameter[i][0] + '~{init}Z-'.format(init=Menu.init if Menu.obs['ini'] ==  '' else Menu.obs['ini']) + Menu.obs['sec'] + '-' + formdate + '.gif'
-			Menu.write_file(url, fyle)
+				url += '.gif'
+				
+				fyle = parameter[i][0] + '~{init}Z-'.format(init=Menu.init if Menu.obs['ini'] ==  '' else Menu.obs['ini']) + s[0] + '-' + formdate + '.gif'
+				Menu.write_file(url, fyle)
 		
 	# --------- end get_obs() ---------- #
 	
 	def get_psu():
 		banner = ''
 		banner = banner.ljust(len(Menu.mdl['mdl'])+4,'#')
-		print( banner ) #if Menu.mdl['mdl']=='EURO' else print( '############' )	# stupid formatting conditionals
+		print( banner )
 		print( '# {mdl} ~{init} #'.format(mdl=Menu.mdl['mdl'], init=Menu.mdl['ini']) )
-		print( banner ) #if Menu.mdl['mdl']=='EURO' else print( '############' )	# stupid formatting conditionals
+		print( banner )
 		print( '\nEnter Forecast Hours\n' )
 		
 		# get Model data to build URL
@@ -466,7 +464,7 @@ class Menu:
 		
 
 	def obs_menu():
-		options = ['1','2','9','R','V','P','C','H','M','D','L','I','T','O','S', 'A']
+		options = ['1','2','9','R','V','P','C','H','M','D','L','I','O','S', 'A', 'E']
 				   
 		print( '#########################' )
 		print( '#     Observations      #' )
@@ -480,11 +478,11 @@ class Menu:
 		print( '# D: Derecho Composite  #' )
 		print( '# L: Max Lapse Rate     #' )
 		print( '# I: Mid LR & Sfc Dewpt #' )
-		print( '# T: 850mb Moist Trans  #' )
 		print( '# O: H8-H5 Cross Over   #' )
 		print( '# S: Low Level Stretch  #' )
 		print( '# A: Critical Angle     #' )
 		print( '# C: 850mb Convergence  #' )
+		print( '# E: Eff Shr & MLCAPE   #' )
 		print( '#########################' )
 		print()
 		print( 'Select Hazard Type' )
@@ -507,31 +505,66 @@ class Menu:
 			return Menu.back()
 		else:
 			Menu.obs['haz'] = sel
-			Menu.stack.append(Menu.haz_menu)
+			Menu.stack.append(Menu.sec_menu)
 			os.system('cls')
-			return Menu.haz_menu()
+			return Menu.sec_menu()
 		
 	### bad formatting with new hazard value ###
-	def haz_menu():
-		options = {'1':('MW',Menu.day_menu),
+	def sec_menu():
+		'''options = {'1':('MW',Menu.day_menu),
 				   '2':('EC',Menu.day_menu),
 				   '3':('CP',Menu.day_menu),
 				   '4':('NE',Menu.day_menu),
 				   '5':('US',Menu.day_menu),
 				   '6':('SP',Menu.day_menu),
 				   '7':('SE',Menu.day_menu),
-				   '9':('Back',Menu.back)}
+				   '9':('Back',Menu.back)}'''
+				   
+		sector  = {'SP':['SP','s15'],
+				   'NE':['NE','s16'],
+				   'EC':['EC','s17'],
+				   'SE':['SE','s18'],
+				   'US':['US','s19'],
+				   'MW':['MW','s20'],
+				   'CP':['CP','s14'],
+				   'NP':['NP','s13']}
+		sectors = []
 
 		print( '#############' )
 		print( '# {haz} Wx #'.format(haz='Winter' if Menu.obs['haz'][0]=='2' else 'Severe') )
 		print( '#############' )
 		print()
 		print( 'Select Sector' )
+		print( 'For multiple Sectors separate by a space' )
+		print()
+		print( '####################' )
+		print( '#     Sectors      #' )
+		print( '#                  #' )
+		print( '# Midwest   - MW   #' )
+		print( '# S. Plains - SP   #' )
+		print( '# U.S.      - US   #' )
+		print( '# C. Plains - CP   #' )
+		print( '# Northeast - NE   #' )
+		print( '# Southeast - SE   #' )
+		print( '# E. Coast  - EC   #' )
+		print( '# N. Plains - NP   #' )
+		print( '####################' )
 
-		sel = Menu.show_menu(options)
+		'''sel = Menu.show_menu(options)
 		Menu.obs['sec'] = options[sel][0]
 				
-		return options[sel][1]()
+		return options[sel][1]()'''
+		
+		# need to add some error checking
+		inp = input('\n>> ').upper()	# maybe build array of Sectors here instead of in get_obs()
+		inp = inp.split()
+		
+		for s in inp:
+			sectors.append(sector[s])
+		
+		Menu.obs['sec'] = sectors
+		os.system('cls')
+		return Menu.day_menu()
 		
 
 	### bad formatting with new hazard value ###
@@ -545,7 +578,7 @@ class Menu:
 		options['9'] = ('Back', Menu.back)
 
 		print( '###############' )
-		print( '# {haz} -{sec}- #'.format(haz='Winter' if Menu.obs['haz'][0]=='2' else 'Severe', sec=Menu.obs['sec']) )
+		print( '# {haz} -{sec}- #'.format(haz='Winter' if Menu.obs['haz'][0]=='2' else 'Severe', sec=Menu.obs['sec'][0]) )
 		print( '#  ' + Menu.DATE.strftime('%m/%d/%Y') + ' #' )
 		print( '###############' )
 		print()

@@ -28,27 +28,85 @@
 			<li>Tutorials</li>
 			<li>Glosssary</li>
 		</ul>
-		<div class=''>
+		<div id='BlogTab' class=''>
 			<h3>What's New</h3>
 			<p>Here are some new features of the application and what's to come!</p>
 		</div>
-		<div class=''>
+		<div id='ForeTab' class=''>
 			<h3>Current Weather</h3>
 			<p>Your current weather conditions are....</p>
 		</div>
-		<div class=''>
+		<div id='RadrTab' class=''>
 			<h3>Current Radar</h3>
 			<img src='' alt='Current Radar' />
 		</div>
-		<div class=''>
+		<div id='TutrTab' class=''>
 			<h3>Tutorials</h3>
 			<p>Learn about the structure of weather systems and different storm types!</p>
 		</div>
-		<div class=''>
-			<h3>Glossary</h3>
-			<p>Terms and Defintions used throughout the application</p>
-		</div>
-	</div>
+		<div id='GlssTab' class=''>
+			<h3>Wx Terms and Definitions</h3>
+			<dl id='GlossList'>
+				<dt>Heights</dt>
+				<dd>
+					This is a description of pressure level heights.
+					<div id='ExHeights' class="ex hide">
+						A perfect Example.
+						<br /><a class='close' onclick="collapse('#ExHeights')">X</a><br />
+					</div>
+					<br /><a class='link' onclick="expand('#ExHeights')">See Example</a><br />
+				</dd>
+				<dt>Differential Cyclonic Vorticity Advection</dt>
+				<dd>
+					This is a description of DCVA.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Mesocyclone</dt>
+				<dd>
+					This is a description of a mesocyclone.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Elevated Mixed Layer</dt>
+				<dd>
+					This is a description of the Elevated Mixed Layer (EML).
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Lapse Rate</dt>
+				<dd>
+					This is a description of Lapse Rate.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Dew Point Temperature</dt>
+				<dd>
+					This is a description of the Dew Point temperature.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Wet Bulb Temperature</dt>
+				<dd>
+					This is a description of the Wet Bulb temperature.
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Planetary Boundary Layer</dt>
+				<dd>
+					This is description of the Planetary Boundary Layer (PBL).
+					<div class='ex hide'>
+					</div>
+				</dd>
+				<dt>Warm Sector</dt>
+				<dd>
+					This is description of the Warm Sector.
+					<div class='ex hide'>
+					</div>
+				</dd>
+			</dl>
+		</div><!-- end GlossWrapper -->
+	</div><!--  end InfoTabsWrapper -->
 	<div id='MainTabsWrapper'>
 		<ul id='MainTabsNav'>
 			<li>Discussion</li>
@@ -139,8 +197,8 @@
 			<br />
 			<br />
 			<br />
-			<img id='SCDiagram' class='scdiag' src='./img/sfc_highlight.png' alt='Supercell and Skew-T Diagram' />
 			<!-- <div style='text-align: center'>[IMAGE OF CORRESPONDING PRESSURE LEVEL ON SUPERCELL SCHEMATIC AND SKEW-T EXAMPLE]</div> -->
+			<img id='SCDiagram' class='scdiag' src='./img/sfc_highlight.png' alt='Supercell and Skew-T Diagram' />
 		</div>
 	</div>
 	<footer>

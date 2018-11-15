@@ -1,5 +1,5 @@
 /*
-	JavaScript for glossary.html
+	JQuery for glossary.html
 */
 
 // function test() { alert('this is a test'); }
@@ -8,8 +8,7 @@
 function expand(id) {
 
 	// show panel
-	$(id).removeClass('hide');
-	$(id).addClass('show');
+	$(id).removeClass('hide').addClass('show');
 
 	// expand and center panel
 	$(id).animate({
@@ -25,7 +24,6 @@ function collapse(id) {
 		width: "0px"});
 	
 	// hide panel
-	$(id).removeClass("show");
-	$(id).addClass("hide");
+	$(id).removeClass("show").addClass("hide");
 }
 

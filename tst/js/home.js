@@ -11,9 +11,12 @@
 
 */
 
-var expanded = true;	// default is expanded Main Tab content
+var EXPANDED;	// condition of Main Tabs
 
 function set_defaults() {
+	// default is expanded Main Tab content
+	EXPANDED = true;
+	
 	// hide all Main Tabs content, except for .default designated
 	$("#MainTabsWrapper > div:not(.default)").addClass("hide");
 	$("#MainTabsWrapper > div.default").addClass("show");
@@ -32,10 +35,11 @@ function set_defaults() {
 
 
 /*
-	display SPC Meso img of field
+	display SPC Meso img for field
 	pre:	valid field key
 	post:	MesoImg src set to value[0] of key/value pair
 			MesoImg alt set to value[1] of key/value pair
+			SCDiagram set to value[2] of key/value pair, if applicable
 */
 function meso_sel(field) {
 	// big ole SPC Meso img dictionary
@@ -81,9 +85,7 @@ function meso_sel(field) {
 	$("#MesoImg").attr("src", "http://www.spc.noaa.gov/exper/mesoanalysis/s20/" + param + "/" + param + ".gif");
 	$("#MesoImg").attr("alt",descr);
 	
-	//alert( Object.keys(field).length );
-	
-	/* if available also set src to corresponding Supercell Schematic and Skew-T for the field selected */
+	// if available also set src to corresponding Supercell Schematic and Skew-T for the field selected
 	if ( mesoimgs[field].length == 3 ) {
 		$("#SCDiagram").attr("src", "./img/"+mesoimgs[field][2]);
 	}
@@ -92,12 +94,12 @@ function meso_sel(field) {
 
 /*
 	shows Main Tab with id
-	pre:	id must have prefix #
-	post:	show content of Tab with id
+	pre:	id must have prefix #, index of MainTabsNav to highlight
+	post:	show content of Main Tab with id, highlight tab of index
 */
-function maintab_sel(id) {
+function maintab_sel(id, index) {
 	/*** ugly conditionals, not sure if there's a better way ***/
-	if (expanded) {
+	if ( EXPANDED ) {
 		// if Disc Tab is selected while expanded, do nothing
 		if ( id == "#DiscTab" ) { return; }
 		// otherwise don't hide Disc Tab
@@ -119,19 +121,48 @@ function maintab_sel(id) {
 	// show active content
 	$(id).removeClass("hide").addClass("show");
 	$("#MesoImgWrapper").removeClass("hide").addClass("show");
+	
+	// remove active highlight, if expanded don't remove Disc Tab highlight
+	if ( EXPANDED ) { $("#MainTabsNav > li:not(:first-of-type)").removeClass("active"); }
+	else { $("#MainTabsNav > li").removeClass("active"); }
+	
+	// highlight active tab
+	$("#MainTabsNav > li:eq(" + index + ")").addClass("active");
+	
+	
+}
+
+
+/*
+	shows Info Tab content with id
+	pre:	id must have prefix, index of InfoTabsNav to hightlight
+	post:	collapse Main Tabs if necessary, show content of Info Tab with id, highlight tab of index
+*/
+function infotab_sel(id, index) {
+	// if Main Tabs expanded, collapse them
+	if ( EXPANDED ) { collapse(); }
+	
+	// hide all Info Tab content
+	$("#InfoTabsWrapper > div").removeClass("show").addClass("hide");
+	// show selected content
+	$(id).removeClass("hide").addClass("show");
+	
+	// remove Info Tab highlighting
+	$("#InfoTabsNav > li").removeClass("active");
+	// highlight selected tab
+	$("#InfoTabsNav > li:eq(" + index + ")").addClass("active");
 }
 
 
 function expand() {
-	// hide Disc content if not active
-	if ( !$("#MaintTabsNav li:first-of-type").hasClass("active") ) { $("#DiscTab").removeClass("show").addClass("hide"); }
+	
 
-	expanded = true;
+	EXPANDED = true;
 }
 function collapse() {
 	
 	
-	expanded = false;
+	EXPANDED = false;
 }
 
 
@@ -150,8 +181,12 @@ $(document).ready(function() {
 				call meso_sel(...) for display
 	*/
 	$("a.link").click(function() {
-		maintab_sel( "#"+$(this).attr("id").split("-")[0]+"Tab" );
-		meso_sel( $(this).attr("id").split("-")[1] );
+		let id =	"#"+$(this).attr("id").split("-")[0]+"Tab";
+		let fld = 	$(this).attr("id").split("-")[1];
+		let ind = 	$("#MainTabsWrapper > div").index( $(id) );
+		
+		maintab_sel( id, ind );
+		meso_sel( fld );
 	});
 	
 	
@@ -164,14 +199,29 @@ $(document).ready(function() {
 	$("#MainTabsNav > li").click(function() {
 		// if not active Tab clicked
 		if ( !$(this).hasClass("active") )  {
-			maintab_sel( "#"+$("#MainTabsWrapper > div:eq(" + $("#MainTabsNav > li").index(this) + ")").attr("id") )
+			let id =	"#" + $("#MainTabsWrapper > div:eq(" + $("#MainTabsNav > li").index(this) + ")").attr("id");
+			let ind =	$("#MainTabsNav > li").index(this);
 			
-			// remove active highlight, if expanded don't remove Disc Tab highlight
-			if ( expanded ) { $("#MainTabsNav > li:not(:first-of-type)").removeClass("active"); }
-			else { $("#MainTabsNav > li").removeClass("active"); }
-			// highlight new active
-			$(this).addClass("active");
+			maintab_sel( id, ind );
 		}
+	});
+	
+	
+	/*
+		on-click event for Info Tabs Nav
+		pre:	DOM loaded
+		post:	call infotab_sel(...) for content id
+				collapse if necessary
+				set clicked Tab active
+	*/
+	$("#InfoTabsNav > li").click(function() {
+		let id =	"#" + $("#InfoTabsWrapper > div:eq(" + $("#InfoTabsNav > li").index(this) + ")").attr("id");
+		let ind =	$("#InfoTabsNav > li").index(this);
+		
+		// if Info Tab clicked while active, expand Main Tabs
+		if( $(id).hasClass("active") ) { expand(); }
+		// otherwise select Info Tab
+		else { infotab_sel( id, ind ); }
 	});
 	
 	
@@ -182,7 +232,9 @@ $(document).ready(function() {
 		post:	call meso_sel(...) for meso param
 	*/
 	$("#MainTabsWrapper > div.content > ul > li").click(function() {
-		meso_sel( $(this).attr("id") );
+		let fld = $(this).attr("id");
+		
+		meso_sel( fld );
 	});
 });	// end doc.ready()
 
