@@ -30,6 +30,7 @@ class Menu:
 	page = None
 	init = None
 	date = None
+	SPCdate = None
 	
 	obs = None
 	mdl = None
@@ -42,6 +43,9 @@ class Menu:
 		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
 		Menu.init = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
 		Menu.date = Menu.DATE.strftime('%Y%m%d')
+		
+		Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
+		Menu.SPCdate = "20"+Menu.SPCdate.split("/")[2]+Menu.SPCdate.split("/")[0]+Menu.SPCdate.split("/")[1]
 		
 		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
@@ -256,7 +260,7 @@ class Menu:
 
 				url += '.gif'
 				
-				fyle = parameter[i][0] + '~{init}Z-'.format(init=Menu.init if Menu.obs['ini'] ==  '' else Menu.obs['ini']) + s[0] + '-' + formdate + '.gif'
+				fyle = parameter[i][0] + '~{init}Z-'.format(init=Menu.init if Menu.obs['ini'] ==  '' else Menu.obs['ini']) + s[0] + '-' + Menu.SPCdate + '.gif'
 				Menu.write_file(url, fyle)
 		
 	# --------- end get_obs() ---------- #
