@@ -39,12 +39,11 @@ class Menu:
 	# initialize all variables, set init and date as default, clean stack
 	def __init__(self):
 		# get init time and format date for Current Obs
-		Menu.DATE = datetime.datetime.now()
 		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
 		Menu.init = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
 		
 		Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
-		Menu.date = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) ).strftime('%Y%m%d')
+		Menu.DATE = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )
 		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
 		Menu.mdl = {'mdl':None, 'ini':None, 'src':None}
@@ -657,7 +656,7 @@ class Menu:
 						
 						# get proper date if automation runs into new day
 						Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
-						Menu.date = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) ).strftime('%Y%m%d')
+						Menu.obs['day'] = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) ).strftime('%Y%m%d')
 					
 						Menu.get_obs()
 						time.sleep(65)	# only grab obs once per hour, sleep until minute exceeds 45
