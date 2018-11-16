@@ -44,6 +44,7 @@ class Menu:
 		
 		Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
 		Menu.DATE = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )
+		Menu.date = datetime.datetime.now()
 		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
 		Menu.mdl = {'mdl':None, 'ini':None, 'src':None}
@@ -138,7 +139,7 @@ class Menu:
 		### Vis :	http://www.spc.noaa.gov/exper/mesoanalysis/{sector}/1kmv/1kmv.gif
 		### Arch:	http://www.spc.noaa.gov/exper/ma_archive/images_s4/{yyyymmdd}/{init}_{param}.gif
 
-		# atmospheric parameter dictionaries
+		# atmospheric parameter groups
 		petig	= [('OBS','bigsfc'),
 				   ('PRS','pmsl'),
 				   ('DEWPT','ttd',True),
@@ -627,7 +628,7 @@ class Menu:
 			return Menu.back()
 		else:
 			i = int(i)
-			begt = datetime.datetime(Menu.DATE.year, Menu.DATE.month, Menu.DATE.day, i, 0, 0)
+			begt = datetime.datetime(Menu.date.year, Menu.date.month, Menu.date.day, i, 0, 0)
 			
 			# input duration
 			print()
@@ -656,7 +657,7 @@ class Menu:
 						
 						# get proper date if automation runs into new day
 						Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
-						Menu.obs['day'] = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) ).strftime('%Y%m%d')
+						Menu.obs['day'] = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )#.strftime('%Y%m%d')
 					
 						Menu.get_obs()
 						time.sleep(65)	# only grab obs once per hour, sleep until minute exceeds 45
