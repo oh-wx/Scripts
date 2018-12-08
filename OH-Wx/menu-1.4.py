@@ -66,10 +66,10 @@ class Menu:
 		
 	
 	def write_file(url, fyle):
-		path = Menu.REPO + Menu.obs['ini'] +'Z' + Menu.obs['day'] + '/'
+		path = Menu.REPO + Menu.obs['ini'] +'Z' + Menu.obs['day'].strftime('%d') + '/'
 		
 		if Menu.obs['ini'] == '':
-			path = Menu.REPO + Menu.init + 'Z' + Menu.obs['day'] + '/'
+			path = Menu.REPO + Menu.init + 'Z' + Menu.obs['day'].strftime('%d') + '/'
 
 		if not os.path.exists(path):
 			os.makedirs(path)
