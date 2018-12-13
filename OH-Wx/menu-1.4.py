@@ -30,6 +30,7 @@ class Menu:
 	page = None
 	init = None
 	date = None
+	SPCdate = None
 	
 	obs = None
 	mdl = None
@@ -38,11 +39,12 @@ class Menu:
 	# initialize all variables, set init and date as default, clean stack
 	def __init__(self):
 		# get init time and format date for Current Obs
-		Menu.DATE = datetime.datetime.now()
 		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
 		Menu.init = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
-		Menu.date = Menu.DATE.strftime('%Y%m%d')
 		
+		Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
+		Menu.DATE = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )
+		Menu.date = datetime.datetime.now()
 		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
 		Menu.mdl = {'mdl':None, 'ini':None, 'src':None}
@@ -64,10 +66,10 @@ class Menu:
 		
 	
 	def write_file(url, fyle):
-		path = Menu.REPO + Menu.obs['ini'] +'Z/'
+		path = Menu.REPO + Menu.obs['ini'] +'Z' + Menu.obs['day'].strftime('%d') + '/'
 		
 		if Menu.obs['ini'] == '':
-			path = Menu.REPO + Menu.init + 'Z/'
+			path = Menu.REPO + Menu.init + 'Z' + Menu.obs['day'].strftime('%d') + '/'
 
 		if not os.path.exists(path):
 			os.makedirs(path)
@@ -137,7 +139,7 @@ class Menu:
 		### Vis :	http://www.spc.noaa.gov/exper/mesoanalysis/{sector}/1kmv/1kmv.gif
 		### Arch:	http://www.spc.noaa.gov/exper/ma_archive/images_s4/{yyyymmdd}/{init}_{param}.gif
 
-		# atmospheric parameter dictionaries
+		# atmospheric parameter groups
 		petig	= [('OBS','bigsfc'),
 				   ('PRS','pmsl'),
 				   ('DEWPT','ttd',True),
@@ -157,7 +159,8 @@ class Menu:
 				   ('MSTRCN','mcon'),
 				   ('H8TRAN','tran',True),
 				   ('H9TRAN','tran_925',True),
-				   ('H9FRNT','9fnt')]
+				   ('H9FRNT','9fnt'),
+				   ('H9TADV','tadv_925',True)]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
@@ -626,7 +629,7 @@ class Menu:
 			return Menu.back()
 		else:
 			i = int(i)
-			begt = datetime.datetime(Menu.DATE.year, Menu.DATE.month, Menu.DATE.day, i, 0, 0)
+			begt = datetime.datetime(Menu.date.year, Menu.date.month, Menu.date.day, i, 0, 0)
 			
 			# input duration
 			print()
@@ -652,6 +655,10 @@ class Menu:
 						Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
 						Menu.init = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
 						Menu.obs['ini'] = ''
+						
+						# get proper date if automation runs into new day
+						Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
+						Menu.obs['day'] = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )#.strftime('%Y%m%d')
 					
 						Menu.get_obs()
 						time.sleep(65)	# only grab obs once per hour, sleep until minute exceeds 45

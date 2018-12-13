@@ -13,12 +13,27 @@ CHANGE LOG
 		
 	menu-1.4.py
 	-----------
+		### UPDATES - 12/06/2018 ###
+		#
+		#	get_obs()
+		#		added H9TADV
+		#
+		#	write_file(...)
+		#		changed path to hhZdd
+				
 		### UPDATES - 11/11/2018 ###
+		#
+		#	__init(...)__
+		#		added SPCdate to pull from SPC Meso page	
 		#
 		#	get_obs()
 		#		set default parameters to petig; removed petig from severe and winter lists
 		#		changed parameter list append operations
 		#		added MIXAVG to thermo
+		#		changed fyle name to use SPCdate
+		#
+		#	aut_menu()
+		#		included SPCdate to grab proper date if automation runs into new day
 				
 		### UPDATES - 10/12/2018 ###
 		#
