@@ -172,7 +172,8 @@ class Menu:
 				   ('MIX','mxth',True),
 				   ('THETAE','thea',True),
 				   ('MIXAVG','mixr',True),
-				   ('3CAPE','lr3c',True)]
+				   ('3CAPE','lr3c',True),
+				   ('3KmC&V','3cvr')]
 				   
 		shear	= [('6KmSHR','shr6'),
 				   ('8KmSHR','shr8'),
