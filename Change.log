@@ -17,6 +17,7 @@ CHANGE LOG
 		#
 		#	get_obs()
 		#		added H9TADV
+		#		added 3CAPE
 		#
 		#	write_file(...)
 		#		changed path to hhZdd
