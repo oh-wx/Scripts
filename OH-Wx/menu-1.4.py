@@ -154,7 +154,7 @@ class Menu:
 				   ('H7FRNT','7fnt',True),
 				   ('H8TADV','tadv',True),
 				   ('H7TADV','7tad',True),
-				   ('HGHCHG','500mb_chg',True),
+				   ('HGHCHG','500mb_chg'),
 				   ('H3VORT','padv',True),
 				   ('MSTRCN','mcon'),
 				   ('H8TRAN','tran',True),
