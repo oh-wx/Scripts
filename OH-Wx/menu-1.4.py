@@ -154,7 +154,7 @@ class Menu:
 				   ('H7FRNT','7fnt',True),
 				   ('H8TADV','tadv',True),
 				   ('H7TADV','7tad',True),
-				   ('HGHCHG','500mb_chg',True),
+				   ('HGHCHG','500mb_chg'),
 				   ('H3VORT','padv',True),
 				   ('MSTRCN','mcon'),
 				   ('H8TRAN','tran',True),
@@ -171,7 +171,9 @@ class Menu:
 				   ('LFC','lfch',True),
 				   ('MIX','mxth',True),
 				   ('THETAE','thea',True),
-				   ('MIXAVG','mixr',True)]
+				   ('MIXAVG','mixr',True),
+				   ('3CAPE','lr3c',True),
+				   ('3KmC&V','3cvr')]
 				   
 		shear	= [('6KmSHR','shr6'),
 				   ('8KmSHR','shr8'),

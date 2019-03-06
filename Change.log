@@ -13,10 +13,17 @@ CHANGE LOG
 		
 	menu-1.4.py
 	-----------
+		### UPDATES - 03/05/2019 ###
+		#
+		#	get_obs()
+		#		HGHCHG is no longer available with filled colors ( ..._sf.gif )
+		
 		### UPDATES - 12/06/2018 ###
 		#
 		#	get_obs()
 		#		added H9TADV
+		#		added 3CAPE
+		#		added 3KmC&V
 		#
 		#	write_file(...)
 		#		changed path to hhZdd
