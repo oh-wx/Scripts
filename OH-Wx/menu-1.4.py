@@ -31,6 +31,7 @@ class Menu:
 	init = None
 	date = None
 	SPCdate = None
+	archive = None
 	
 	obs = None
 	mdl = None
@@ -41,6 +42,7 @@ class Menu:
 		# get init time and format date for Current Obs
 		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
 		Menu.init = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
+		Menu.archive = False
 		
 		Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
 		Menu.DATE = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )
@@ -217,7 +219,7 @@ class Menu:
 		
 		# get obs data to build URL
 		current = True if Menu.obs['ini'] == '' else False
-		archive = True if (Menu.DATE - Menu.obs['day']).total_seconds() > 432000 else False
+		#archive = True if (Menu.DATE - Menu.obs['day']).total_seconds() > 432000 else False
 		past = Menu.obs['day'].strftime('%y%m%d')
 		formdate = Menu.obs['day'].strftime('%Y%m%d')
 		parameter = petig	# assign petigre data as default params
@@ -236,7 +238,7 @@ class Menu:
 		# grab data!
 		for s in Menu.obs['sec']:
 			for i in range(len(parameter)):
-				if archive:
+				if Menu.archive:
 					url = 'http://www.spc.noaa.gov/exper/ma_archive/images_s4/{date}/{init}_{param}'.format(date=formdate, init=Menu.obs['ini'], param=parameter[i][1])
 				else:
 					url = 'http://www.spc.noaa.gov/exper/mesoanalysis/{sector}/{param}/'.format(sector=s[1], param=parameter[i][1])
@@ -593,6 +595,7 @@ class Menu:
 		
 		# if archive day selected, get date
 		if sel == '6':
+			Menu.archive = True
 			print( '\nEnter the Archive date (mm/dd/yyyy):' )
 			date = input('\n>> ')
 			date = date.split('/')

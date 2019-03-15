@@ -13,6 +13,16 @@ CHANGE LOG
 		
 	menu-1.4.py
 	-----------
+		### UPDATES - 03/15/2019 ###
+		#
+		#	get_obs()
+		#		updated archive logic
+		#		initializes to false in constructor
+		#
+		#	day_menu()
+		#		added archive = True to "6" selection logic
+		#
+		
 		### UPDATES - 03/05/2019 ###
 		#
 		#	get_obs()
