@@ -18,6 +18,7 @@ CHANGE LOG
 		#	get_obs()
 		#		updated archive logic
 		#		initializes to false in constructor
+		#		added SBFRNT to petig
 		#
 		#	day_menu()
 		#		added archive = True to "6" selection logic
