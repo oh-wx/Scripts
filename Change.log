@@ -156,5 +156,5 @@ CHANGE LOG
 	-----------------
 		### ADDED - 3/29/2019 ###
 		#
-		#	HiRes GOES-16 from NASA has tricky URL update every 5min
-		#		adds random characters after patterned string for file name
+		#	hires_goes(...) is ready for add to menu-1.4.py
+		#		consider updating minutes for file name

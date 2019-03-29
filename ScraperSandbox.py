@@ -18,7 +18,7 @@ class TestBed:
 	type = None
 	
 	def __init__(self):
-		TestBed.url = "https://weather.msfc.nasa.gov/goes/abi/dynamic/GOES18172019088RHiLje.jpg"
+		TestBed.url = "https://weather.msfc.nasa.gov/cgi-bin/get-abi?satellite=GOESEastconusband02&lat=35&lon=-97&zoom=1&width=1400&height=1000&quality=100"
 		TestBed.type = "HISAT"
 		
 		TestBed.date = datetime.datetime.now()
@@ -40,17 +40,28 @@ class TestBed:
 		
 		
 		
-	def ext_duration(beg, dur):
+	def hires_goes(beg, dur):
 		begt = datetime.datetime(TestBed.date.year, TestBed.date.month, TestBed.date.day, beg, 0, 0)
 		endt = begt + timedelta(hours =+ dur)
 		curt = datetime.datetime.now()
 		
+		page = None
+		url = None
+		
 		while (curt < endt):
 			if ( (curt.minute%5) == 0 ):
-				fyle = "VISSAT~" + curt.hour + curt.minute + ".gif"
-				TestBed.write_file(TestBed.url, fyle)
+				page = urllib.request.urlopen(TestBed.url).read()
+				images = BeautifulSoup(page, 'html.parser').findAll('img')
+				url = "https://weather.msfc.nasa.gov" + images[0]['src']
+
+				fyle = "VISSAT~" + str(curt.hour) + str(curt.minute) + ".gif"	# could change minute to -8 for actual time, consider bounds min<8
+				TestBed.write_file(url, fyle)
+				
+				time.sleep(65)	# only scrape once
 			
 			curt = datetime.datetime.now()
+			
+			
 			
 def main():
 
@@ -71,7 +82,7 @@ def main():
 	print( "Running..." )
 	print( "for next " + duration + " hours" )
 	
-	TestBed.ext_duration( int(start), int(duration) )
+	TestBed.hires_goes( int(start), int(duration) )
 	
 	print( "Scraping Complete\n" )
 	input( "Press Enter" )
