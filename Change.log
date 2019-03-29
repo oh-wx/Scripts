@@ -150,3 +150,11 @@ CHANGE LOG
 		#		added H3VORT to petig list
 		#		added STRECH to hazards
 		#		added CANGLE to hazards
+		
+		
+	ScraperSandbox.py
+	-----------------
+		### ADDED - 3/29/2019 ###
+		#
+		#	HiRes GOES-16 from NASA has tricky URL update every 5min
+		#		adds random characters after patterned string for file name
