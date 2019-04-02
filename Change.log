@@ -1,6 +1,19 @@
 CHANGE LOG
 ----------
-
+	
+	MesoScrp-1.1.py
+	-----------
+		### ADDED - 4/02/2019 ###
+		#
+		#	this will replace menu-1.4.py as primary obs scraper
+	
+	ScraperSandbox.py
+	-----------------
+		### ADDED - 3/29/2019 ###
+		#
+		#	hires_goes(...) is ready for add to menu-1.4.py
+		#		consider updating minutes for file name
+		
 	home.js
 	-------
 		### UPDATES - 4/23/2018 ###
@@ -150,11 +163,3 @@ CHANGE LOG
 		#		added H3VORT to petig list
 		#		added STRECH to hazards
 		#		added CANGLE to hazards
-		
-		
-	ScraperSandbox.py
-	-----------------
-		### ADDED - 3/29/2019 ###
-		#
-		#	hires_goes(...) is ready for add to menu-1.4.py
-		#		consider updating minutes for file name
