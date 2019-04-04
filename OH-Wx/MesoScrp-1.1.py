@@ -118,7 +118,7 @@ class Menu:
 		images = BeautifulSoup(page, 'html.parser').findAll('img')
 		
 		url = "https://weather.msfc.nasa.gov" + images[0]['src']
-		fyle = "VISSAT~" + str(curt.hour) + str(curt.minute) + "-GOES16-.gif"
+		fyle = "VISSAT~" + curt.strftime('%H') + curt.strftime('%M') + "-GOES16-" + curt.strftime('%Y%m%d') + ".gif"
 		
 		Menu.write_file(url, fyle)
 		
@@ -192,7 +192,8 @@ class Menu:
 				   ('EFFSRH','effh'),
 				   ('3KmSRH','srh3'),
 				   ('1KmSRH','srh1'),
-				   ('9-11KmSHR','ulsr'),
+				   ('9-11KmSRW','ulsr'),
+				   ('AVLSRW','alsr'),
 				   ('SBVORT','dvvr',True),
 				   ('3KmSHR','shr3')]
 				   
@@ -438,8 +439,8 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-		satlat = 37
-		satlon = -97
+		satlat = 34
+		satlon = -100
 		sectors = ['TX','OK']	# array of MesoNet sector(s)
 		
 				   

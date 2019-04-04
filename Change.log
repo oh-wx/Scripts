@@ -6,6 +6,11 @@ CHANGE LOG
 		### ADDED - 4/02/2019 ###
 		#
 		#	this will replace menu-1.4.py as primary obs scraper
+		#
+		### UPDATES - 4/04/2019 ###
+		#
+		#	get_obs()
+		#		added AVLSRW to shear dictionary
 	
 	ScraperSandbox.py
 	-----------------
