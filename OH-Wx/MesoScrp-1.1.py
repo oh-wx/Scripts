@@ -175,6 +175,7 @@ class Menu:
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
 				   ('MUCAPE','mucp',True),
+				   ('SBLI','muli',True),
 				   ('MLR','laps',True),
 				   ('LLR','lllr',True),
 				   ('LCL','lclh',True),

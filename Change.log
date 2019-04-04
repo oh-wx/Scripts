@@ -11,6 +11,7 @@ CHANGE LOG
 		#
 		#	get_obs()
 		#		added AVLSRW to shear dictionary
+		#		added SBLI to thermo dictionary
 	
 	ScraperSandbox.py
 	-----------------
