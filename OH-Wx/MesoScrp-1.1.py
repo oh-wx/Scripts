@@ -9,18 +9,6 @@ from datetime import date, timedelta
 import time
 
 
-### TO-DO ###
-#
-#	implement get_twd(), get_cod()
-#
-#	
-#	update Obs Menu Titles for hazard type
-#
-#	implement grab_data()
-#		unify data struct for obs and mdl
-
-
-
 class Menu:
 	### GLOBALS ###
 
@@ -34,7 +22,6 @@ class Menu:
 	archive = None
 	
 	obs = None
-	mdl = None
 	stack = None
 	
 	# initialize all variables, set init and date as default, clean stack
@@ -49,7 +36,6 @@ class Menu:
 		Menu.date = datetime.datetime.now()
 		
 		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
-		Menu.mdl = {'mdl':None, 'ini':None, 'src':None}
 		Menu.stack =[]
 
 	
@@ -78,7 +64,11 @@ class Menu:
 		
 		path = path + fyle
 		with open(path, 'wb') as f:
-				f.write( requests.get(url).content )		
+			try:
+				f.write( requests.get(url).content )
+			except urllib.URLError:
+				print( "Could not download: " + fyle )
+				return
 		print(fyle)
 		
 	
@@ -117,21 +107,43 @@ class Menu:
 				os.system('cls')
 				Menu.back()
 			
-	def get_sat(url):
-		path = Menu.REPO + 'sat/'
+	def get_goes16(lat, lon):
+		### Centered OKC:	"https://weather.msfc.nasa.gov/cgi-bin/get-abi?satellite=GOESEastconusband02&lat=35&lon=-97&zoom=1&width=1400&height=1000&quality=100"
+		### Centered DFW:	"https://weather.msfc.nasa.gov/cgi-bin/get-abi?satellite=GOESEastconusband02&lat=32&lon=-96&zoom=1&width=1400&height=1000&quality=100"
+		### Centered CHL:	"https://weather.msfc.nasa.gov/cgi-bin/get-abi?satellite=GOESEastconusband02&lat=34&lon=-100&zoom=1&width=1400&height=1000&quality=100"
+		### Centered WDW:	"https://weather.msfc.nasa.gov/cgi-bin/get-abi?satellite=GOESEastconusband02&lat=36&lon=-99&zoom=1&width=1400&height=1000&quality=100"
+		### Centered WTC:	"https://weather.msfc.nasa.gov/cgi-bin/get-abi?satellite=GOESEastconusband02&lat=37&lon=-97&zoom=1&width=1400&height=1000&quality=100"
+
+		curt = datetime.datetime.now() + timedelta(minutes =- 4)	# image is being captured 4min after valid
+		api_url = "https://weather.msfc.nasa.gov/cgi-bin/get-abi?satellite=GOESEastconusband02&lat={lat}&lon={lon}&zoom=1&width=1400&height=1000&quality=100"\
+				  .format(lat=lat, lon=lon)
 		
-		### ERRORS ###
-		utcdt = datetime.datetime.now() + timedelta(hours =+ 5) # this will have to change with Daylight Savings
-		fyle = "VISSAT~{i}Z-{d}.gif".format( i=utcdt.strftime('%H%M'), d=utcdt.strftime('%Y%m%d') )
+		page = urllib.request.urlopen(api_url).read()
+		images = BeautifulSoup(page, 'html.parser').findAll('img')
 		
-		if not os.path.exists(path):
-			os.makedirs(path)
-			
-		path = path + fyle
-		with open(path, 'wb') as f:
-				f.write( requests.get(url).content )		
-		print(fyle)
-	
+		url = "https://weather.msfc.nasa.gov" + images[0]['src']
+		fyle = "VISSAT~" + curt.strftime('%H') + curt.strftime('%M') + "-GOES16-" + curt.strftime('%Y%m%d') + ".gif"
+		
+		Menu.write_file(url, fyle)
+		
+	def get_mesonet(sec):
+		### S. Plains:	"http://rain.ttu.edu/sfc_plots/L_SPLNS_plot.gif"
+		### Texas:		"http://rain.ttu.edu/sfc_plots/L_txplot.gif"
+		### W. Texas:	"http://rain.ttu.edu/sfc_plots/L_sjt_plot.gif"
+		### TX Phandle:	"http://rain.ttu.edu/sfc_plots/L_LBB_plot.gif"
+		### OK Mesonet:	"http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif"
+		
+		sectors	= {'SPL':'http://rain.ttu.edu/sfc_plots/L_SPLNS_plot.gif',
+				   'TX':'http://rain.ttu.edu/sfc_plots/L_txplot.gif',
+				   'WTX':'http://rain.ttu.edu/sfc_plots/L_sjt_plot.gif',
+				   'TXP':'http://rain.ttu.edu/sfc_plots/L_LBB_plot.gif',
+				   'OK':'http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif',
+				   'CPL':'http://rain.ttu.edu/sfc_plots/L_cen_usplot.gif'}
+				   
+		for s in sec:
+			fyle = "OBS~" + Menu.init + "Z-" + s + "-" + Menu.obs['day'].strftime('%Y%m%d') + ".gif"
+			Menu.write_file( sectors[s], fyle )
+		
 	
 	def get_obs():
 		### Curr:	http://www.spc.noaa.gov/exper/mesoanalysis/{sector}/{param}/{param}.gif					## NOTE: for filled colors {param}_sf.gif
@@ -168,6 +180,7 @@ class Menu:
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
 				   ('MUCAPE','mucp',True),
+				   ('SBLI','muli',True),
 				   ('MLR','laps',True),
 				   ('LLR','lllr',True),
 				   ('LCL','lclh',True),
@@ -185,7 +198,8 @@ class Menu:
 				   ('EFFSRH','effh'),
 				   ('3KmSRH','srh3'),
 				   ('1KmSRH','srh1'),
-				   ('9-11KmSHR','ulsr'),
+				   ('9-11KmSRW','ulsr'),
+				   ('AVLSRW','alsr'),
 				   ('SBVORT','dvvr',True),
 				   ('3KmSHR','shr3')]
 				   
@@ -269,190 +283,8 @@ class Menu:
 		
 	# --------- end get_obs() ---------- #
 	
-	def get_psu():
-		banner = ''
-		banner = banner.ljust(len(Menu.mdl['mdl'])+4,'#')
-		print( banner )
-		print( '# {mdl} ~{init} #'.format(mdl=Menu.mdl['mdl'], init=Menu.mdl['ini']) )
-		print( banner )
-		print( '\nEnter Forecast Hours\n' )
-		
-		# get Model data to build URL
-		start	= int( input('Starting hour >>  ') )
-		stop 	= int( input('Ending hour   >>  ') )
-		models 	= {'EURO':('ECMWF_','ECMWF0.5_'), 'CMC':('CMC_','CMCNA_'), 'GFS':('MRF_','')}
-		model  	= Menu.mdl['mdl']
-		init 	= '0z' if Menu.mdl['ini']=='00Z' else Menu.mdl['ini'].lower().strip('0')	# format init time for URL
-		interval = 12
-		
-		if model=='CMC' and init=='12z':
-			url = models[model][1] + init
-		else:
-			url = models[model][0] + init
-
-		if model == 'EURO':
-			interval = 24
-
-		# grab data!
-		for i in range(start, stop+interval, interval):
-			
-			if model=='EURO': #and i>168:						# < ------------ ERROR @ PSU model[0] url broken
-				url = models[model][1] + init					# < ------------ ||
-
-			image = 'http://mp1.met.psu.edu/~fxg1/{model}/f{hr}.gif'.format(hr=i, model=url)
-			fyle = '{hr}hr_{model}-{init}Z-'.format( hr=i, model=model, init=init.strip('z').zfill(2) ) + Menu.DATE.strftime('%Y%m%d') + '.gif'
-			Menu.write_file(image, fyle)
-		
-		
-	def get_twd():
-		#################################################################################
-		#                              		Severe                                    	#	
-		#																			   	#
-		# winds:	10m		temps:	10m		shear:	SRH 0-1Km		motion:	SR Motion  	#
-		#			925mb							SRH 0-3Km				10m Inflow 	#
-		#			850mb	dewpt:	10m				EHI 0-1Km						   	#
-		#			700mb							EHI 0-3Km						   	#
-		#			500mb	insta:	CAPE			500mb Cross						   	#
-		#			300mb			CIN				850/925mb Cross ??? 			   	#
-		#################################################################################
-
-		#################################################################################
-		#									Winter										#
-		#																				#
-		# winds:	10m		temps:	10m		dewpt:	700mb RH							#
-		#			925mb			925mb			PWAT								#
-		#			850mb			850mb			925/850mb ???						#
-		#			700mb			MAXTEMP												#
-		#			500mb																#
-		#			300mb																#
-		#################################################################################
-		
-		'''
-		URL = 'http://www.twisterdata.com/data/models/gfs/3/maps/2016/12/19/06/GFS_3_2016121906_F120_TMPF_2_M_ABOVE_GROUND.png'
-			  'http://www.twisterdata.com/data/models/rap/255/maps/2017/02/07/12/RAP_255_2017020712_F00_TMPF_2_M_ABOVE_GROUND.png'
-			  'http://www.twisterdata.com/data/models/nam/221/maps/2017/02/07/12/NAM_221_2017020712_F00_TMPF_2_M_ABOVE_GROUND.png'
-			  
-			  'http://www.twisterdata.com/data/models/nam/221/maps/{yyyy}/{mm}/{dd}/{ii}/NAM_221_{yyyymmddii}_F{hr}_{param}_{level}.png'
-			  'http://www.twisterdata.com/data/models/gfs/3/maps/{yyyy}/{mm}/{dd}/{ii}/GFS_3_{yyyymmddii}_F{hr}_{param}_{level}.png'
-			  'http://www.twisterdata.com/data/models/rap/255/maps/{yyyy}/{mm}/{dd}/{ii}/RAP_255_{yyyymmddii}_F{hr}_{param}_{level}.png'
-		
-		
-		 NOTES:  levels are a little finicky
-					SRM 				- '6000_M'
-					RAP EHI/SRH/PWAT/LCL- 'SURFACE'
-					LIFT 				- '500_1000_MB'
-					MAXTEMP 			- 'SFC_500MB'
-					NAM SRH				- '3000_M_ABOVE_GROUND_0_M_ABOVE_GROUND'
-					NAM EHI				- '3000_M'
-					
-				GFS does not offer SRH maps
-		'''
-	
-		# winds use 10M ABOVE GROUND, temp/dewpt use 2M ABOVE GROUND
-		model	= {'GFS':('gfs','3','GFS_3_'),
-				   'NAM':('nam','221','NAM_221_'),
-				   'RAP':('rap','255','RAP_255_')}
-				   
-		'''
-		level	= [('SFC','2_M_ABOVE_GROUND','10_M_ABOVE_GROUND','SURFACE'),
-				   ('925mb','925_MB'),
-				   ('850mb','850_MB'),
-				   ('700mb','700_MB'),
-				   ('500mb','500_MB'),
-				   ('300mb','300_MB')]
-		
-		petig	= [('WIND','WSPD'),
-				   ('TEMP','TMPF','TMPC'),
-				   ('DEWPT','DPTF','DPTC'),
-				   ('700mbRH','RH_700_MB'),
-				   ('PWAT','PWATIN_SURFACE')]
-		'''
-				   
-		winds	= [('SFC_WIND','10_M_ABOVE_GROUND_WSPD'),
-				   ('925mbWIND','925_MB_WSPD'),
-				   ('850mbWIND','850_MB_WSPD'),
-				   ('700mbWIND','700_MB_WSPD'),
-				   ('500mbWIND','500_MB_WSPD'),
-				   ('300mbWIND','300_MB_WSPD')]
-				   
-		temps	= [('SFC_TEMP','2_M_ABOVE_GROUND_TMPF'),
-				   ('925mbTEMP','925_MB_TMPC'),
-				   ('850mbTEMP','850_MB_TMPC')]
-				   
-		dewpt	= [('SFC_DEWP','2_M_ABOVE_GROUND_DPTF'),
-				   ('925mbDEWP','925_MB_DPTC'),
-				   ('850mbDEWP','850_MB_DPTC'),
-				   ('700mbRH','RH_700_MB'),
-				   ('PWAT','PWATIN_SURFACE')]
-				  
-		therm	= [('CAPE','CAPE_SURFACE'),
-				   ('CIN','CIN_SURFACE'),
-				   ('LCL','ZLCLM_SURFACE')]
-				   #('LIFT','LFTX_')]
-		
-		helcy	= [('1KmEHI','EHI1_SURFACE','EHI_1000_M'),
-				   ('3KmEHI','EHI3_SURFACE','EHI_3000_M'),
-				   ('1KmSRH','HLCY1_SURFACE','HLCY_1000_M_ABOVE_GROUND_0_M_ABOVE_GROUND'),
-				   ('3KmSRH','HLCY3_SURFACE','HLCY_3000_M_ABOVE_GROUND_0_M_ABOVE_GROUND')]
-				   
-		shear	= [('VORT','RELV_500_MB'),
-				   ('500mbSHR','SHRM_500_MB'),
-				   ('MOTION','SSPD_6000_M')]
-				   
-		wintr	= [('MAXTEMP','TVMXC_SURFACE_500_MB')]
-				   
-		
-		severe = (winds, temps[0], dewpt, therm, shear) if Menu.mdl['mdl']=='GFS' else (winds, temps[0], dewpt, therm, shear, helcy)
-		winter = (temps, dewpt, wintr)
-				  
-		#formdate = 
-		
-		print( '### TEST ###' )
-		print( 'TwisterData has not been implemented' )
-		print( str(model) + ' ' + str(init) )
-		# --------- end get_twd() ---------- #
-	
-	'''
-	def get_iwx():
-		banner = ''
-		banner = banner.ljust(len(Menu.mdl['mdl'])+4,'#')
-		print( banner ) #if Menu.mdl['mdl']=='EURO' else print( '############' )	# stupid formatting conditionals
-		print( '# Instant Wx Maps - {mdl} ~{init} #'.format(mdl=Menu.mdl['mdl'], init=Menu.mdl['ini']) )
-		print( banner ) #if Menu.mdl['mdl']=='EURO' else print( '############' )	# stupid formatting conditionals
-		print( '\nEnter Forecast Hours\n' )
-		
-		# get Model data to build URL
-		start	= int( input('Starting hour >>  ') )
-		stop 	= int( input('Ending hour   >>  ') )
-		
-		
-		models 	= {'EURO':('ECMWF_','ECMWF0.5_'), 'CMC':('CMC_','CMCNA_'), 'GFS':('MRF_','')}
-		model  	= Menu.mdl['mdl']
-		init 	= '0z' if Menu.mdl['ini']=='00Z' else Menu.mdl['ini'].lower().strip('0')	# format init time for URL
-		interval = 12
-		
-		if model=='CMC' and init=='12z':
-			url = models[model][1] + init
-		else:
-			url = models[model][0] + init
-
-		if model == 'EURO':
-			interval = 24
-
-		# grab data!
-		for i in range(start, stop+interval, interval):
-			
-			if model=='EURO': #and i>168:						# < ------------ ERROR @ PSU model[0] url broken
-				url = models[model][1] + init	*/				# < ------------ ||
-		
-		image = 'http://www.instantweathermaps.com/ECMWF/2017121812/USA_PRMSL_msl_144.gif'	#.format(hr=i, model=url)
-		fyle = 'test.gif'	#.format( hr=i, model=model, init=init.strip('z').zfill(2) ) + Menu.DATE.strftime('%Y%m%d') + '.gif'
-		Menu.write_file(image, fyle) 
-	'''
-		
 	def main_menu():
 		options = {'1':('Observations',Menu.obs_menu),
-				   '2':('Models',Menu.mdl_menu),
 				   '0':('Exit',exit)}
 		
 		Menu.stack.append(Menu.main_menu)
@@ -608,10 +440,15 @@ class Menu:
 		
 	
 	def aut_menu():
-		begt = None;
-		dur = None;
-		endt = None;
-		saturl = None;
+		begt = None
+		dur = None
+		endt = None
+		
+		# TEMPORARY #
+		satlat = 38
+		satlon = -82.70
+		sectors = ['CPL']	# array of MesoNet sector(s)
+		
 				   
 		print( '###############' )
 		print( '# {haz} -{sec}- #'.format(haz='Winter' if Menu.obs['haz'][0]=='2' else 'Severe', sec=Menu.obs['sec']) )
@@ -667,12 +504,14 @@ class Menu:
 						Menu.obs['day'] = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )#.strftime('%Y%m%d')
 					
 						Menu.get_obs()
-						time.sleep(65)	# only grab obs once per hour, sleep until minute exceeds 45
+						Menu.get_mesonet(sectors)
+						Menu.get_goes16(satlat,satlon)
+						
+						time.sleep(65)	# only grab obs once per hour
 					
-					### ERRORS - challenges in grabbing dynamic content from msfc.nasa.gov ###
-					#if not saturl == None:
-						#Menu.get_sat(saturl)
-						#time.sleep(1200)	# only grab sat once per 5min, sleep for 5min
+					if( (curt.minute%5) == 0 ):
+						Menu.get_goes16(satlat, satlon)
+						time.sleep(65)	# only grab goes16 once per 5min
 					
 				curt = datetime.datetime.now()
 		
@@ -704,81 +543,7 @@ class Menu:
 			return Menu.get_obs()
 		
 		return
-		
-			
-	def mdl_menu():
-		options = {'1':('EURO', Menu.mdl_init),
-				   '2':('CMC',  Menu.mdl_init),
-				   '3':('GFS',  Menu.mdl_init),
-				   '4':('NAM',  Menu.mdl_init),
-				   '5':('RAP',  Menu.mdl_init),
-				   '9':('Back', Menu.back)}
-		
-		print( '##########' )
-		print( '# Models #' )
-		print( '##########' )
-		print()
-		print( 'Select Model' )
-		
-		sel = Menu.show_menu(options)
-		Menu.mdl['mdl'] = options[sel][0]
-		
-		return options[sel][1]()
-	
-	
-	def mdl_init():
-		# build options specific for EURO/CMC and GFS/NAM
-		banner = ''
-		banner = banner.ljust(len(Menu.mdl['mdl'])+4,'#')
 
-		options = {}
-		if Menu.mdl['mdl']=='EURO' or Menu.mdl['mdl']=='CMC':
-			options = {'1':('00Z',Menu.mdl_sauc),
-					   '2':('12Z',Menu.mdl_sauc)}
-		else:
-			options = {'1':('00Z',Menu.mdl_sauc),
-					   '2':('06Z',Menu.mdl_sauc),
-					   '3':('12Z',Menu.mdl_sauc),
-					   '4':('18Z',Menu.mdl_sauc)}
-		
-		# add Back option since menu was dynamically generated
-		options.update({'9':('Back',Menu.back)})
-		
-		print( banner )# if Menu.mdl['mdl']=='EURO' else print( '#######' )	# stupid formatting conditionals
-		print( '# {mdl} #'.format(mdl=Menu.mdl['mdl']) ) 
-		print( banner )# if Menu.mdl['mdl']=='EURO' else print( '#######' )	# stupid formatting conditionals
-		print()
-		
-		sel = Menu.show_menu(options)
-		Menu.mdl['ini'] = options[sel][0]
-		
-		return options[sel][1]()
-	
-	
-	def mdl_sauc():
-		options = {'1':('PSU Ewall',  Menu.get_psu),
-				   '2':('Twisterdata',Menu.get_twd)}
-				   #'3':('Inst Wx Map',Menu.get_iwx)}
-		
-		# cumbersome conditional to determine sauce, majority are dependent
-		if Menu.mdl['mdl'] == 'GFS':
-			print( '#############' )
-			print( '# GFS - {init} #'.format(init=Menu.mdl['ini']) )
-			print( '#############' )
-			print()
-			
-			sel = Menu.show_menu(options)
-			Menu.mdl['src'] = options[sel][0]
-			
-			return options[sel][1]()
-			
-		elif Menu.mdl['mdl']=='EURO' or Menu.mdl['mdl']=='CMC':
-			Menu.mdl['src'] = 'PSU Ewall'
-			return Menu.get_psu()
-			
-		elif Menu.mdl['mdl']=='NAM' or Menu.mdl['mdl']=='RAP':
-			Menu.mdl['src'] = 'Twisterdata'
-			return Menu.get_twd()
 		
 	
 		

@@ -1,6 +1,31 @@
 CHANGE LOG
 ----------
-
+	
+	MesoScrp-1.1.py
+	-----------
+		### ADDED - 4/02/2019 ###
+		#
+		#	this will replace menu-1.4.py as primary obs scraper
+		#
+		
+		### UPDATES - 4/15/2019 ###
+		#
+		#	write_file(...)
+		#		added exception handling for URLError to return and continue run instead of force quit
+				
+		### UPDATES - 4/04/2019 ###
+		#
+		#	get_obs()
+		#		added AVLSRW to shear dictionary
+		#		added SBLI to thermo dictionary
+	
+	ScraperSandbox.py
+	-----------------
+		### ADDED - 3/29/2019 ###
+		#
+		#	hires_goes(...) is ready for add to menu-1.4.py
+		#		consider updating minutes for file name
+		
 	home.js
 	-------
 		### UPDATES - 4/23/2018 ###
@@ -13,6 +38,17 @@ CHANGE LOG
 		
 	menu-1.4.py
 	-----------
+		### UPDATES - 03/15/2019 ###
+		#
+		#	get_obs()
+		#		updated archive logic
+		#		initializes to false in constructor
+		#		added SBFRNT to petig
+		#
+		#	day_menu()
+		#		added archive = True to "6" selection logic
+		#
+		
 		### UPDATES - 03/05/2019 ###
 		#
 		#	get_obs()
