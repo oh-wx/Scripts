@@ -64,7 +64,11 @@ class Menu:
 		
 		path = path + fyle
 		with open(path, 'wb') as f:
-				f.write( requests.get(url).content )		
+			try:
+				f.write( requests.get(url).content )
+			except urllib.URLError:
+				print( "Could not download: " + fyle )
+				return
 		print(fyle)
 		
 	
@@ -133,7 +137,8 @@ class Menu:
 				   'TX':'http://rain.ttu.edu/sfc_plots/L_txplot.gif',
 				   'WTX':'http://rain.ttu.edu/sfc_plots/L_sjt_plot.gif',
 				   'TXP':'http://rain.ttu.edu/sfc_plots/L_LBB_plot.gif',
-				   'OK':'http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif'}
+				   'OK':'http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif',
+				   'CPL':'http://rain.ttu.edu/sfc_plots/L_cen_usplot.gif'}
 				   
 		for s in sec:
 			fyle = "OBS~" + Menu.init + "Z-" + s + "-" + Menu.obs['day'].strftime('%Y%m%d') + ".gif"
@@ -440,9 +445,9 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-		satlat = 34
-		satlon = -100
-		sectors = ['TX','OK']	# array of MesoNet sector(s)
+		satlat = 38
+		satlon = -82.70
+		sectors = ['CPL']	# array of MesoNet sector(s)
 		
 				   
 		print( '###############' )

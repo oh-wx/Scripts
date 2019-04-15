@@ -7,6 +7,12 @@ CHANGE LOG
 		#
 		#	this will replace menu-1.4.py as primary obs scraper
 		#
+		
+		### UPDATES - 4/15/2019 ###
+		#
+		#	write_file(...)
+		#		added exception handling for URLError to return and continue run instead of force quit
+				
 		### UPDATES - 4/04/2019 ###
 		#
 		#	get_obs()
