@@ -8,6 +8,10 @@ body {
 }
 header, footer {
 	border: 1px solid #000;
+	height: 200px;
+}
+canvas {
+	height: 150px;
 }
 footer {
 	clear: both;

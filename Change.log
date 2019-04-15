@@ -36,6 +36,14 @@ CHANGE LOG
 		#	added infotab_sel(...)
 		#		need to implement expand() and collapse()
 		
+	Home.html
+	---------
+		### UPDATES - 4/15/2019 ###
+		#
+		#	<header>
+		#		added canvas for both Logos
+		#		updated text
+		
 	menu-1.4.py
 	-----------
 		### UPDATES - 03/15/2019 ###
