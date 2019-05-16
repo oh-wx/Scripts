@@ -8,6 +8,11 @@ CHANGE LOG
 		#	this will replace menu-1.4.py as primary obs scraper
 		#
 		
+		### UPDATES - 5/16/2019 ###
+		#
+		#	get_obs(()
+		#		added H8WIND to petig dictionary
+				
 		### UPDATES - 4/15/2019 ###
 		#
 		#	write_file(...)

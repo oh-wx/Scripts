@@ -175,7 +175,8 @@ class Menu:
 				   ('H9TRAN','tran_925',True),
 				   ('H9FRNT','9fnt'),
 				   ('H9TADV','tadv_925',True),
-				   ('SBFRNT','sfnt')]
+				   ('SBFRNT','sfnt'),
+				   ('H8WIND','850mb2')]
 				   
 		thermo  = [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
@@ -445,9 +446,9 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-		satlat = 38
-		satlon = -82.70
-		sectors = ['CPL']	# array of MesoNet sector(s)
+		satlat = 35
+		satlon = -100
+		sectors = ['TX','OK','SPL']	# array of MesoNet sector(s)
 		
 				   
 		print( '###############' )
