@@ -12,7 +12,10 @@ CHANGE LOG
 		#
 		#	get_obs(()
 		#		added H8WIND to petig dictionary
-				
+		#
+		#	sec_menu()
+		#		added SW to sector list
+		
 		### UPDATES - 4/15/2019 ###
 		#
 		#	write_file(...)
