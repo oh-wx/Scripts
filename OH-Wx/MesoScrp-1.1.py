@@ -448,9 +448,9 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-		satlat = 38
-		satlon = -85
-		sectors = ['TX','OK','SPL','CPL']	# array of MesoNet sector(s)
+		satlat = 32.5
+		satlon = -96
+		sectors = ['TX','CPL']	# array of MesoNet sector(s)
 		
 				   
 		print( '###############' )

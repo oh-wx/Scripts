@@ -28,7 +28,7 @@ class TestBed:
 
 
 	def write_file(url, fyle):
-		path = TestBed.REPO + TestBed.type + "/"
+		path = TestBed.REPO + "/"	#+ TestBed.type + "/"
 
 		if not os.path.exists(path):
 			os.makedirs(path)
@@ -60,9 +60,16 @@ class TestBed:
 				time.sleep(65)	# only scrape once
 			
 			curt = datetime.datetime.now()
-			
-			
-			
+	
+
+	def get_sonde(sites, date, init):
+		for site in sites:
+			url = "https://www.spc.noaa.gov/exper/soundings/"
+			url += date + init + "_OBS/" + site + ".gif"
+			fyle = "SKEW-T&HODO~" + init + "Z-K" + site + "-20" + date + ".gif"
+			TestBed.write_file(url, fyle)
+
+	
 def main():
 
 	start = None
@@ -72,6 +79,16 @@ def main():
 	
 	os.system("cls")
 	print( "Web Scraper Sandbox" )
+	print( "Enter Sounding Sites (SSS) separated by a space:")
+	sites = input( ">> " )
+	sites = sites.upper().split()
+	print( "Enter init time:" )
+	init = input( ">> ")
+	print( "Enter date (yymmdd):" )
+	date = input( ">> ")
+	TestBed.get_sonde(sites, date, init)
+	
+	'''
 	print( "for now...update URL in __init(...)__" )
 	print( "Enter start hour (24hr CDT)")
 	start = input( ">> " )
@@ -86,6 +103,7 @@ def main():
 	
 	print( "Scraping Complete\n" )
 	input( "Press Enter" )
+	'''
 	
 main()
 	
