@@ -190,7 +190,8 @@ class Menu:
 				   ('THETAE','thea',True),
 				   ('MIXAVG','mixr',True),
 				   ('3CAPE','lr3c',True),
-				   ('3KmC&V','3cvr')]
+				   ('3KmC&V','3cvr'),
+				   ('DCAPE','dcape')]
 				   
 		shear	= [('6KmSHR','shr6'),
 				   ('8KmSHR','shr8'),
@@ -448,15 +449,10 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-<<<<<<< HEAD
-		satlat = 35.25
-		satlon = -99
+		satlat = 32
+		satlon = -95
 		sectors = ['TX','OK','SPL','CPL']	# array of MesoNet sector(s)
-=======
-		satlat = 32.5
-		satlon = -96
-		sectors = ['TX','CPL']	# array of MesoNet sector(s)
->>>>>>> 66a3f9de74d24d3c618deed3a0f69cd20d465a81
+
 		
 				   
 		print( '###############' )
