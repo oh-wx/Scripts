@@ -8,6 +8,11 @@ CHANGE LOG
 		#	this will replace menu-1.4.py as primary obs scraper
 		#
 		
+		### UPDATES - 6/23/2019 ###
+		#
+		#	get_mesonet()
+		#		added 'FWD' 'TXP'
+		
 		### UPDATES - 6/19/2019 ###
 		#
 		#	get_obs()

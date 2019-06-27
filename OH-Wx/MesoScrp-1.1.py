@@ -138,7 +138,9 @@ class Menu:
 				   'WTX':'http://rain.ttu.edu/sfc_plots/L_sjt_plot.gif',
 				   'TXP':'http://rain.ttu.edu/sfc_plots/L_LBB_plot.gif',
 				   'OK':'http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif',
-				   'CPL':'http://rain.ttu.edu/sfc_plots/L_cen_usplot.gif'}
+				   'CPL':'http://rain.ttu.edu/sfc_plots/L_cen_usplot.gif',
+				   'FWD':'http://rain.ttu.edu/sfc_plots/L_dfw.gif',
+				   'TXP':'http://rain.ttu.edu/sfc_plots/L_PAN_plot.gif'}
 				   
 		for s in sec:
 			fyle = "OBS~" + Menu.init + "Z-" + s + "-" + Menu.obs['day'].strftime('%Y%m%d') + ".gif"
@@ -449,9 +451,9 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-		satlat = 32
-		satlon = -95
-		sectors = ['TX','OK','SPL','CPL']	# array of MesoNet sector(s)
+		satlat = 33
+		satlon = -97.3
+		sectors = ['TX','OK','SPL','FWD','TXP']	# array of MesoNet sector(s)
 
 		
 				   
