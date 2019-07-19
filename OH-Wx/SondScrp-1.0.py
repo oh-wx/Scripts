@@ -2,11 +2,7 @@ import os
 import sys
 
 import urllib.request
-from bs4 import BeautifulSoup
 import requests
-import datetime
-from datetime import date, timedelta
-import time
 
 
 class Sonde:
