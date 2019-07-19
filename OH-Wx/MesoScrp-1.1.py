@@ -451,9 +451,9 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-		satlat = 33
-		satlon = -97.3
-		sectors = ['TX','OK','SPL','FWD','TXP']	# array of MesoNet sector(s)
+		satlat = 30.6
+		satlon = -92.27
+		sectors = ['TX','FWD','SPL']	# array of MesoNet sector(s)
 
 		
 				   
