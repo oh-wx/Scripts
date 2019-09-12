@@ -14,7 +14,7 @@ class Sonde:
 
 
 	def __init__(self):
-		Sonde.date = None
+		Sonde.date = ''
 		Sonde.init = []
 		Sonde.site = []
 		
@@ -75,7 +75,7 @@ class Sonde:
 		print( 'Enter initial time(s)' )
 		print( '(separate initial times with a space' )
 		
-		Sonde.init = input('\n>> ')
+		Sonde.init = input('\n>> ').split()
 		
 		return Sonde.date_menu()
 	
