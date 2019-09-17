@@ -69,6 +69,26 @@ class TestBed:
 			fyle = "SKEW-T&HODO~" + init + "Z-K" + site + "-20" + date + ".gif"
 			TestBed.write_file(url, fyle)
 
+
+	def min_goes(beg, dur):
+		begt = datetime.datetime(TestBed.date.year, TestBed.date.month, TestBed.date.day, beg, 0,0)
+		endt = begt + timedelta(hours =+ dur)
+		curt = datetime.datetime.now()
+		
+		page = None
+		url  = None
+		
+		while (curt < endt):
+			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/mesoscale_02_band_02_sector_01/" +
+				  "mesoscale_02_band_02_sector_01_{ymdhm}53.gif".format(ymd=curt.strftime("%Y%m%d%H%M")
+				  
+			fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=curt.strftime("%H%M"), ymd=curt.strftime("%y%m%d"))
+			TestBed.write_file(url, fyle)
+			time.sleep(60)	# only pull data once per minute
+			
+			curt = datetime.datetime.now()
+			
+
 	
 def main():
 
@@ -79,6 +99,10 @@ def main():
 	
 	os.system("cls")
 	print( "Web Scraper Sandbox" )
+	
+	
+	
+	'''
 	print( "Enter Sounding Sites (SSS) separated by a space:")
 	sites = input( ">> " )
 	sites = sites.upper().split()
@@ -88,7 +112,7 @@ def main():
 	date = input( ">> ")
 	TestBed.get_sonde(sites, date, init)
 	
-	'''
+	
 	print( "for now...update URL in __init(...)__" )
 	print( "Enter start hour (24hr CDT)")
 	start = input( ">> " )

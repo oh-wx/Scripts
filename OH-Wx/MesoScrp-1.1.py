@@ -372,7 +372,8 @@ class Menu:
 				   'MW':['MW','s20'],
 				   'CP':['CP','s14'],
 				   'NP':['NP','s13'],
-				   'SW':['SW','s12']}
+				   'SW':['SW','s12'],
+				   'NW':['NW','s11']}
 		sectors = []
 
 		print( '#############' )
@@ -394,6 +395,7 @@ class Menu:
 		print( '# E. Coast  - EC   #' )
 		print( '# N. Plains - NP   #' )
 		print( '# Southwest - SW   #' )
+		print( '# Northwest - NW   #' )
 		print( '####################' )
 
 		'''sel = Menu.show_menu(options)
@@ -451,9 +453,9 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-		satlat = 30.6
-		satlon = -92.27
-		sectors = ['TX','FWD','SPL']	# array of MesoNet sector(s)
+		satlat = 28.5
+		satlon = -78.3
+		sectors = ['CPL']	# array of MesoNet sector(s)
 
 		
 				   

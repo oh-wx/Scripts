@@ -49,6 +49,9 @@ CHANGE LOG
 		#
 		#	hires_goes(...) is ready for add to menu-1.4.py
 		#		consider updating minutes for file name
+		#
+		#	added min_goes(...)
+		
 		
 	home.js
 	-------
