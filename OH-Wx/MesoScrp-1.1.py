@@ -12,7 +12,7 @@ import time
 class Menu:
 	### GLOBALS ###
 
-	REPO = 'C:\\Storm_Images\\NEW---TEMP\\DataGrab\\'
+	REPO = 'C:\\WxEvents\\NEW---TEMP\\DataGrab\\'
 	DATE = None
 	
 	page = None
@@ -453,9 +453,9 @@ class Menu:
 		endt = None
 		
 		# TEMPORARY #
-		satlat = 28.5
-		satlon = -78.3
-		sectors = ['CPL']	# array of MesoNet sector(s)
+		satlat = 31.32
+		satlon = -97.18
+		sectors = ['TX','FWD']	# array of MesoNet sector(s)
 
 		
 				   
@@ -514,12 +514,12 @@ class Menu:
 					
 						Menu.get_obs()
 						Menu.get_mesonet(sectors)
-						Menu.get_goes16(satlat,satlon)
+						#Menu.get_goes16(satlat,satlon)
 						
 						time.sleep(65)	# only grab obs once per hour
 					
 					if( (curt.minute%5) == 0 ):
-						Menu.get_goes16(satlat, satlon)
+						#Menu.get_goes16(satlat, satlon)
 						time.sleep(65)	# only grab goes16 once per 5min
 					
 				curt = datetime.datetime.now()

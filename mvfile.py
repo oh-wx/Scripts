@@ -8,12 +8,13 @@ import sys
 import msvcrt
 import os.path
 import datetime
+from datetime import date, timedelta
 import time
 
 def main():
 	os.system('cls')
 	
-	fyle = 'C:\\Storm_Images\\NEW---TEMP\\GRL3\\'
+	fyle = 'C:\\WxEvents\\NEW---TEMP\\GR3\\'
 	path = None
 	
 	
@@ -29,14 +30,17 @@ def main():
 	
 	print( 'Enter desitnation ("\\" req):' )
 	path 		= input('\n>> ')
-	print( 'Enter ending time in EDT (24hr):' )
+	print( 'Enter duration in hrs:' )
 	print()
 	print()
-	endt		= int( input('\n>> ') )
+	dur			= int( input('\n>> ') )
 	fnadjust 	= None
 	crdir		= path
 	
-	while int(datetime.datetime.now().hour) < endt:
+	begt = datetime.datetime.now()
+	endt = begt + timedelta(hours =+ dur)
+	
+	while datetime.datetime.now() < ( datetime.datetime.now()+timedelta(hours =+ dur) ):
 		try:
 			#if int(datetime.datetime.now().hour) < endt:
 			for fname in os.listdir(fyle):
