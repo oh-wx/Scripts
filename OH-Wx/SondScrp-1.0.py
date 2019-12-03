@@ -6,7 +6,7 @@ import requests
 
 
 class Sonde:
-	REPO = 'C:\\WxEvents\\NEW---TEMP\\DataGrab\\'
+	REPO = 'W:\\WxEvents\\NEW---TEMP\\'
 
 	date = None
 	init = None

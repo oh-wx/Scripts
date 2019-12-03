@@ -12,7 +12,7 @@ import time
 class Menu:
 	### GLOBALS ###
 
-	REPO = 'C:\\WxEvents\\NEW---TEMP\\DataGrab\\'
+	REPO = 'W:\\WxEvents\\NEW---TEMP\\DataGrab\\'
 	DATE = None
 	
 	page = None
