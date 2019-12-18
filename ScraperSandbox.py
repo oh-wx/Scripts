@@ -68,15 +68,22 @@ class TestBed:
 			TestBed.write_file(url, fyle)
 
 
-	def min_goes(beg, end):
+	def min_goes(beg, end, sec):
 		dir = "\\1mg\\"
+        
+        #sec = {
+         #   "M1B2S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_",
+        #    "M1B2S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_"
+        #}
 		
-		begt = beg + timedelta(hours =+ 5)	# convert to UTC
-		endt = end + timedelta(hours =+ 5)	# convert to UTC
+        
+        # need to implement full date, not just beginning / ending hour
+		begt = beg + timedelta(hours =+ 6)	# convert to UTC ;  MUST CHANGE W/ DST
+		endt = end + timedelta(hours =+ 6)	# convert to UTC ;  MUST CHANGE W/ DST
 
 		while begt < endt:
-			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_" + \
-			      "{date}23.gif".format( date = begt.strftime("%Y%m%d%H%M") )
+			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_" + \
+			"{date}22.gif".format( date = begt.strftime("%Y%m%d%H%M") )
 		
 			fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=begt.strftime("%H%M"), ymd=begt.strftime("%y%m%d"))
 			TestBed.write_file(url, fyle, dir)
@@ -85,8 +92,12 @@ class TestBed:
 	
 	def get_1minG(beg, dur):
 		dir = "\\1mg\\"
-		#sec = {("S1BD2":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_")}
-		
+		'''
+        sec = {("M1B2S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_"),
+               ("M1B2S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_")}
+		'''
+        
+        
 		begt = datetime.datetime(TestBed.date.year, TestBed.date.month, TestBed.date.day, beg, 0,0)
 		endt = begt + timedelta(hours =+ dur+5)									# convert to UTC
 		curt = datetime.datetime.now() + timedelta(hours =+ 5, minutes =- 30)	# convert to UTC
@@ -120,7 +131,7 @@ def main():
 	print( "Enter duration in hours:" )
 	dur  = int( input("\n>> ") )
 	
-	TestBed.get_1minG(beg, dur)
+	TestBed.min_goes(beg, dur, "M1B2S5")
 	
 	
 	
