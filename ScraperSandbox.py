@@ -11,7 +11,7 @@ import time
 
 class TestBed:
 
-	REPO = 'C:\\WxEvents\\NEW---TEMP\\TestBed\\'
+	REPO = 'W:\\WxEvents\\NEW---TEMP\\TestBed\\'
 	
 	url = None
 	date = None
@@ -68,36 +68,45 @@ class TestBed:
 			TestBed.write_file(url, fyle)
 
 
-	def min_goes(beg, end, sec):
-		dir = "\\1mg\\"
-        
-        #sec = {
-         #   "M1B2S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_",
-        #    "M1B2S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_"
-        #}
+	def bd2_goes(beg, end, sec):
+		dir = "\\1mg\\{s}\\".format(s=sec)
 		
-        
-        # need to implement full date, not just beginning / ending hour
-		begt = beg + timedelta(hours =+ 6)	# convert to UTC ;  MUST CHANGE W/ DST
-		endt = end + timedelta(hours =+ 6)	# convert to UTC ;  MUST CHANGE W/ DST
+		sectors = {
+			"M1S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_",
+            "M1S2":"mesoscale_01_band_02_sector_02/mesoscale_01_band_02_sector_02_",
+			"M1S3":"mesoscale_01_band_02_sector_03/mesoscale_01_band_02_sector_03_",
+            "M1S4":"mesoscale_01_band_02_sector_04/mesoscale_01_band_02_sector_04_",
+			"M1S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_",
+            "M2S1":"mesoscale_02_band_02_sector_01/mesoscale_02_band_02_sector_01_",
+			"M2S2":"mesoscale_02_band_02_sector_02/mesoscale_02_band_02_sector_02_",
+            "M2S3":"mesoscale_02_band_02_sector_03/mesoscale_02_band_02_sector_03_",
+            "M2S4":"mesoscale_02_band_02_sector_04/mesoscale_02_band_02_sector_04_",
+			"M2S5":"mesoscale_02_band_02_sector_05/mesoscale_02_band_02_sector_05_"}
+		
+		
+		# need to implement full date, not just beginning / ending hour
+		begt = beg + timedelta(hours =+ 5)			# convert to UTC ;	MUST CHANGE W/ DST
+		#endt = end + timedelta(hours =+ 5)			# convert to UTC ;	MUST CHANGE W/ DST
+		
+		# 4wk archive grab
+		endt = begt + timedelta(hours =+ (end))
 
 		while begt < endt:
-			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_" + \
-			"{date}22.gif".format( date = begt.strftime("%Y%m%d%H%M") )
-		
-			fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=begt.strftime("%H%M"), ymd=begt.strftime("%y%m%d"))
+			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/{s}{date}52.gif".format( s=sectors[sec], date=begt.strftime("%Y%m%d%H%M") )
+			fyle = "BD02~{hm}Z-{ymd}.gif".format(hm=begt.strftime("%H%M"), ymd=begt.strftime("%Y%m%d"))
 			TestBed.write_file(url, fyle, dir)
+			
 			begt = begt + timedelta(minutes =+ 1)
 
 	
 	def get_1minG(beg, dur):
 		dir = "\\1mg\\"
 		'''
-        sec = {("M1B2S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_"),
-               ("M1B2S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_")}
+		sec = {("M1B2S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_"),
+			   ("M1B2S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_")}
 		'''
-        
-        
+		
+		
 		begt = datetime.datetime(TestBed.date.year, TestBed.date.month, TestBed.date.day, beg, 0,0)
 		endt = begt + timedelta(hours =+ dur+5)									# convert to UTC
 		curt = datetime.datetime.now() + timedelta(hours =+ 5, minutes =- 30)	# convert to UTC
@@ -106,7 +115,7 @@ class TestBed:
 		
 		while (curt < endt):
 			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_" + \
-			      "{date}23.gif".format( date = curt.strftime("%Y%m%d%H%M") )
+				  "{date}23.gif".format( date = curt.strftime("%Y%m%d%H%M") )
 			fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=curt.strftime("%H%M"), ymd=curt.strftime("%Y%m%d"))
 			TestBed.write_file(url, fyle, dir)
 			time.sleep(60)	# only pull data once per minute
@@ -124,14 +133,14 @@ def main():
 	print( "Web Scraper Sandbox" )
 	print( "-------------------" )
 # ----------------------------------- #
-# ---- N E W   C O D E   H E R E  --- #
+# ---- N E W   C O D E	 H E R E  --- #
 
 	print( "Enter start time in CD/ST (24hr):" )
-	beg = int( input("\n>> ") )
+	beg = datetime.datetime(2020,6,6,13,10,0)
 	print( "Enter duration in hours:" )
-	dur  = int( input("\n>> ") )
+	dur	 = int( input("\n>> ") )
 	
-	TestBed.min_goes(beg, dur, "M1B2S5")
+	TestBed.bd2_goes(beg, dur, "M2S5")
 	
 	
 	

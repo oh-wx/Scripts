@@ -10,6 +10,13 @@ CHANGE LOG
 	----------------
 		### ADDED - 7/19/19 ###
 		
+	### UPDATES - 7/08/2020 ###
+	#
+	#	added indv_menu()
+	#
+	#	site_menu() -> regn_menu()
+	#		added Regions
+	#		* update to accept multiple Regions
 		
 		
 	MesoScrp-1.1.py

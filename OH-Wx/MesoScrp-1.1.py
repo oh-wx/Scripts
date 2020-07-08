@@ -25,6 +25,8 @@ class Menu:
 	stack = None
 	
 	# initialize all variables, set init and date as default, clean stack
+    #
+    # !!!
 	def __init__(self):
 		# get init time and format date for Current Obs
 		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
@@ -126,21 +128,21 @@ class Menu:
 		
 		Menu.write_file(url, fyle)
 		
-	def get_mesonet(sec):
+	def get_mesonet(sec,curt):
 		### S. Plains:	"http://rain.ttu.edu/sfc_plots/L_SPLNS_plot.gif"
 		### Texas:		"http://rain.ttu.edu/sfc_plots/L_txplot.gif"
 		### W. Texas:	"http://rain.ttu.edu/sfc_plots/L_sjt_plot.gif"
-		### TX Phandle:	"http://rain.ttu.edu/sfc_plots/L_LBB_plot.gif"
-		### OK Mesonet:	"http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif"
+		### TX Phandle: "http://rain.ttu.edu/sfc_plots/L_LBB_plot.gif"
+		### OK Mesonet: "http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif"
 		
-		sectors	= {'SPL':'http://rain.ttu.edu/sfc_plots/L_SPLNS_plot.gif',
-				   'TX':'http://rain.ttu.edu/sfc_plots/L_txplot.gif',
-				   'WTX':'http://rain.ttu.edu/sfc_plots/L_sjt_plot.gif',
-				   'TXP':'http://rain.ttu.edu/sfc_plots/L_LBB_plot.gif',
-				   'OK':'http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif',
-				   'CPL':'http://rain.ttu.edu/sfc_plots/L_cen_usplot.gif',
-				   'FWD':'http://rain.ttu.edu/sfc_plots/L_dfw.gif',
-				   'TXP':'http://rain.ttu.edu/sfc_plots/L_PAN_plot.gif'}
+		sectors = {'SPL':'http://rain.ttu.edu/sfc_plots/L_SPLNS_plot.gif',
+				   'TX' :'http://weather.rap.ucar.edu/surface/{date}_metars_abi.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+				   'OK' :'http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif',
+				   'TXP':'http://rain.ttu.edu/sfc_plots/L_PAN_plot.gif',
+				   'OHV':'http://weather.rap.ucar.edu/surface/{date}_metars_dtw.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+                   'DIX':'http://weather.rap.ucar.edu/surface/{date}_metars_lit.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+                   'CPL':'http://weather.rap.ucar.edu/surface/{date}_metars_ict.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+                   'NEW':'http://weather.rap.ucar.edu/surface/{date}_metars_alb.gif'.format( date=curt.strftime("%Y%m%d%H") )}
 				   
 		for s in sec:
 			fyle = "OBS~" + Menu.init + "Z-" + s + "-" + Menu.obs['day'].strftime('%Y%m%d') + ".gif"
@@ -180,7 +182,7 @@ class Menu:
 				   ('SBFRNT','sfnt'),
 				   ('H8WIND','850mb2')]
 				   
-		thermo  = [('SBCAPE','sbcp',True),
+		thermo	= [('SBCAPE','sbcp',True),
 				   ('MLCAPE','mlcp',True),
 				   ('MUCAPE','mucp',True),
 				   ('SBLI','muli',True),
@@ -193,7 +195,8 @@ class Menu:
 				   ('MIXAVG','mixr',True),
 				   ('3CAPE','lr3c',True),
 				   ('3KmC&V','3cvr'),
-				   ('DCAPE','dcape')]
+				   ('DCAPE','dcape'),
+				   ('ETEMP','eltm')]
 				   
 		shear	= [('6KmSHR','shr6'),
 				   ('8KmSHR','shr8'),
@@ -205,7 +208,8 @@ class Menu:
 				   ('9-11KmSRW','ulsr'),
 				   ('AVLSRW','alsr'),
 				   ('SBVORT','dvvr',True),
-				   ('3KmSHR','shr3')]
+				   ('3KmSHR','shr3'),
+                   ('VTNMAG','vtm',True)]
 				   
 		comp	= [('SCCOMP','scp'),
 				   ('SIGTOR','stpc'),
@@ -216,8 +220,8 @@ class Menu:
 				   ('SFCBULB','swbt'),
 				   ('MAXBULB','mxwb')]
 				  
-		severe  = thermo + shear + comp
-		winter  = frozen
+		severe	= thermo + shear + comp
+		winter	= frozen
 		
 		# dictionaries for Obs Menu selection
 		hazard	= {'1':severe,
@@ -294,16 +298,20 @@ class Menu:
 		Menu.stack.append(Menu.main_menu)
 		os.system('cls')
 		
+		print( "Enter path, include \\" )
+		Menu.REPO = input( "\n>> " )
+		print()
+		
 		print( '###############################' )
-		print( '#                             #' )
+		print( '#							  #' )
 		print( '# Wx Data Gather - '+Menu.DATE.strftime('%m/%d/%Y')+' #' )
-		print( '#                             #' )
+		print( '#							  #' )
 		print( '###############################' )
 		print()
 		print( 'Select Wx Data:' )
-
-		sel = Menu.show_menu(options)
 		
+		sel = Menu.show_menu(options)
+	
 		return options[sel][1]()
 		
 
@@ -311,22 +319,22 @@ class Menu:
 		options = ['1','2','9','R','V','P','C','H','M','D','L','I','O','S', 'A', 'E']
 				   
 		print( '#########################' )
-		print( '#     Observations      #' )
-		print( '#                       #' )
+		print( '#	  Observations		#' )
+		print( '#						#' )
 		print( '# Additional Parameters #' )
-		print( '# R: Base Reflectivity  #' )
-		print( '# V: Visible Satellite  #' )
+		print( '# R: Base Reflectivity	#' )
+		print( '# V: Visible Satellite	#' )
 		print( '# P: Precipitable Water #' )
 		print( '# H: Hail Parameters	#' )
 		print( '# M: MCS Maintenance	#' )
-		print( '# D: Derecho Composite  #' )
-		print( '# L: Max Lapse Rate     #' )
+		print( '# D: Derecho Composite	#' )
+		print( '# L: Max Lapse Rate		#' )
 		print( '# I: Mid LR & Sfc Dewpt #' )
-		print( '# O: H8-H5 Cross Over   #' )
-		print( '# S: Low Level Stretch  #' )
-		print( '# A: Critical Angle     #' )
-		print( '# C: 850mb Convergence  #' )
-		print( '# E: Eff Shr & MLCAPE   #' )
+		print( '# O: H8-H5 Cross Over	#' )
+		print( '# S: Low Level Stretch	#' )
+		print( '# A: Critical Angle		#' )
+		print( '# C: 850mb Convergence	#' )
+		print( '# E: Eff Shr & MLCAPE	#' )
 		print( '#########################' )
 		print()
 		print( 'Select Hazard Type' )
@@ -364,7 +372,7 @@ class Menu:
 				   '7':('SE',Menu.day_menu),
 				   '9':('Back',Menu.back)}'''
 				   
-		sector  = {'SP':['SP','s15'],
+		sector	= {'SP':['SP','s15'],
 				   'NE':['NE','s16'],
 				   'EC':['EC','s17'],
 				   'SE':['SE','s18'],
@@ -384,15 +392,15 @@ class Menu:
 		print( 'For multiple Sectors separate by a space' )
 		print()
 		print( '####################' )
-		print( '#     Sectors      #' )
-		print( '#                  #' )
-		print( '# Midwest   - MW   #' )
+		print( '#	  Sectors	   #' )
+		print( '#				   #' )
+		print( '# Midwest	- MW   #' )
 		print( '# S. Plains - SP   #' )
-		print( '# U.S.      - US   #' )
+		print( '# U.S.		- US   #' )
 		print( '# C. Plains - CP   #' )
 		print( '# Northeast - NE   #' )
 		print( '# Southeast - SE   #' )
-		print( '# E. Coast  - EC   #' )
+		print( '# E. Coast	- EC   #' )
 		print( '# N. Plains - NP   #' )
 		print( '# Southwest - SW   #' )
 		print( '# Northwest - NW   #' )
@@ -455,7 +463,7 @@ class Menu:
 		# TEMPORARY #
 		satlat = 31.32
 		satlon = -97.18
-		sectors = ['TX','FWD']	# array of MesoNet sector(s)
+		sectors = ['TX','CPL']	# array of MesoNet sector(s)
 
 		
 				   
@@ -513,14 +521,17 @@ class Menu:
 						Menu.obs['day'] = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )#.strftime('%Y%m%d')
 					
 						Menu.get_obs()
-						Menu.get_mesonet(sectors)
+						Menu.get_mesonet( sectors, curt+timedelta(hours =+ 5) )
+						
 						#Menu.get_goes16(satlat,satlon)
 						
-						time.sleep(65)	# only grab obs once per hour
+						time.sleep(3300)	# sleep for 55min until next cycle
 					
+					'''
 					if( (curt.minute%5) == 0 ):
 						#Menu.get_goes16(satlat, satlon)
 						time.sleep(65)	# only grab goes16 once per 5min
+					'''
 					
 				curt = datetime.datetime.now()
 		
