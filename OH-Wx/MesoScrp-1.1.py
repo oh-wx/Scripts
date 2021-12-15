@@ -25,8 +25,8 @@ class Menu:
 	stack = None
 	
 	# initialize all variables, set init and date as default, clean stack
-    #
-    # !!!
+	#
+	# !!!
 	def __init__(self):
 		# get init time and format date for Current Obs
 		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
@@ -135,15 +135,29 @@ class Menu:
 		### TX Phandle: "http://rain.ttu.edu/sfc_plots/L_LBB_plot.gif"
 		### OK Mesonet: "http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif"
 		
+		
+		# !!! Update to use Menu.obs[sec] as key; tuple for naming to not overwrite:  'SP':('SPL',url)
+		# want TX to be taken when SP sector is called, etc
+		
 		sectors = {'SPL':'http://rain.ttu.edu/sfc_plots/L_SPLNS_plot.gif',
 				   'TX' :'http://weather.rap.ucar.edu/surface/{date}_metars_abi.gif'.format( date=curt.strftime("%Y%m%d%H") ),
 				   'OK' :'http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif',
 				   'TXP':'http://rain.ttu.edu/sfc_plots/L_PAN_plot.gif',
 				   'OHV':'http://weather.rap.ucar.edu/surface/{date}_metars_dtw.gif'.format( date=curt.strftime("%Y%m%d%H") ),
-                   'DIX':'http://weather.rap.ucar.edu/surface/{date}_metars_lit.gif'.format( date=curt.strftime("%Y%m%d%H") ),
-                   'CPL':'http://weather.rap.ucar.edu/surface/{date}_metars_ict.gif'.format( date=curt.strftime("%Y%m%d%H") ),
-                   'NEW':'http://weather.rap.ucar.edu/surface/{date}_metars_alb.gif'.format( date=curt.strftime("%Y%m%d%H") )}
-				   
+				   'DIX':'http://weather.rap.ucar.edu/surface/{date}_metars_lit.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+				   'CPL':'http://weather.rap.ucar.edu/surface/{date}_metars_ict.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+				   'NEW':'http://weather.rap.ucar.edu/surface/{date}_metars_alb.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+                   'ECS':'http://weather.rap.ucar.edu/surface/{date}_metars_clt.gif'.format( date=curt.strftime("%Y%m%d%H") )}
+		'''
+		sectors = {'SP':[('SPL','http://rain.ttu.edu/sfc_plots/L_SPLNS_plot.gif'),('TX' :'http://weather.rap.ucar.edu/surface/{date}_metars_abi.gif'.format( date=curt.strftime("%Y%m%d%H")
+		),
+				   'OK' :'http://www.mesonet.org/data/public/mesonet/maps/realtime/current.wx.gif',
+				   'TXP':'http://rain.ttu.edu/sfc_plots/L_PAN_plot.gif',
+				   'OHV':'http://weather.rap.ucar.edu/surface/{date}_metars_dtw.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+				   'DIX':'http://weather.rap.ucar.edu/surface/{date}_metars_lit.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+				   'CPL':'http://weather.rap.ucar.edu/surface/{date}_metars_ict.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+				   'NEW':'http://weather.rap.ucar.edu/surface/{date}_metars_alb.gif'.format( date=curt.strftime("%Y%m%d%H") )}
+		'''
 		for s in sec:
 			fyle = "OBS~" + Menu.init + "Z-" + s + "-" + Menu.obs['day'].strftime('%Y%m%d') + ".gif"
 			Menu.write_file( sectors[s], fyle )
@@ -209,7 +223,8 @@ class Menu:
 				   ('AVLSRW','alsr'),
 				   ('SBVORT','dvvr',True),
 				   ('3KmSHR','shr3'),
-                   ('VTNMAG','vtm',True)]
+				   ('VTNMAG','vtm',True),
+                   ('500mSRH','srh5')]
 				   
 		comp	= [('SCCOMP','scp'),
 				   ('SIGTOR','stpc'),
@@ -298,8 +313,8 @@ class Menu:
 		Menu.stack.append(Menu.main_menu)
 		os.system('cls')
 		
-		print( "Enter path, include \\" )
-		Menu.REPO = input( "\n>> " )
+		print( "Enter path:" )
+		Menu.REPO = input( "\n>> " ) + '\\'
 		print()
 		
 		print( '###############################' )
@@ -463,7 +478,7 @@ class Menu:
 		# TEMPORARY #
 		satlat = 31.32
 		satlon = -97.18
-		sectors = ['TX','CPL']	# array of MesoNet sector(s)
+		sectors = ['TX','DIX','OHV']	# array of MesoNet sector(s)
 
 		
 				   

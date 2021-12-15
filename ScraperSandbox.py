@@ -34,8 +34,7 @@ class TestBed:
 		with open(path, 'wb') as f:
 				f.write( requests.get(url).content )		
 		print(fyle)
-		
-		print(url + "\n")
+	
 		
 			
 	def hires_goes(beg, dur):
@@ -69,18 +68,18 @@ class TestBed:
 
 
 	def bd2_goes(beg, end, sec):
-		dir = "\\1mg\\{s}\\".format(s=sec)
+		dir = "\\{s}\\".format(s=sec)
 		
 		sectors = {
 			"M1S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_",
-            "M1S2":"mesoscale_01_band_02_sector_02/mesoscale_01_band_02_sector_02_",
+			"M1S2":"mesoscale_01_band_02_sector_02/mesoscale_01_band_02_sector_02_",
 			"M1S3":"mesoscale_01_band_02_sector_03/mesoscale_01_band_02_sector_03_",
-            "M1S4":"mesoscale_01_band_02_sector_04/mesoscale_01_band_02_sector_04_",
+			"M1S4":"mesoscale_01_band_02_sector_04/mesoscale_01_band_02_sector_04_",
 			"M1S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_",
-            "M2S1":"mesoscale_02_band_02_sector_01/mesoscale_02_band_02_sector_01_",
+			"M2S1":"mesoscale_02_band_02_sector_01/mesoscale_02_band_02_sector_01_",
 			"M2S2":"mesoscale_02_band_02_sector_02/mesoscale_02_band_02_sector_02_",
-            "M2S3":"mesoscale_02_band_02_sector_03/mesoscale_02_band_02_sector_03_",
-            "M2S4":"mesoscale_02_band_02_sector_04/mesoscale_02_band_02_sector_04_",
+			"M2S3":"mesoscale_02_band_02_sector_03/mesoscale_02_band_02_sector_03_",
+			"M2S4":"mesoscale_02_band_02_sector_04/mesoscale_02_band_02_sector_04_",
 			"M2S5":"mesoscale_02_band_02_sector_05/mesoscale_02_band_02_sector_05_"}
 		
 		
@@ -92,34 +91,42 @@ class TestBed:
 		endt = begt + timedelta(hours =+ (end))
 
 		while begt < endt:
-			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/{s}{date}52.gif".format( s=sectors[sec], date=begt.strftime("%Y%m%d%H%M") )
+			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/{s}{date}56.gif".format( s=sectors[sec], date=begt.strftime("%Y%m%d%H%M") )
 			fyle = "BD02~{hm}Z-{ymd}.gif".format(hm=begt.strftime("%H%M"), ymd=begt.strftime("%Y%m%d"))
 			TestBed.write_file(url, fyle, dir)
 			
 			begt = begt + timedelta(minutes =+ 1)
 
 	
-	def get_1minG(beg, dur):
-		dir = "\\1mg\\"
-		'''
-		sec = {("M1B2S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_"),
-			   ("M1B2S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_")}
-		'''
+	def get_1minG(dur, sec):
+		dir = "\\{s}\\".format(s=sec)
+		sectors = {
+			"M1S1":"mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_",
+			"M1S2":"mesoscale_01_band_02_sector_02/mesoscale_01_band_02_sector_02_",
+			"M1S3":"mesoscale_01_band_02_sector_03/mesoscale_01_band_02_sector_03_",
+			"M1S4":"mesoscale_01_band_02_sector_04/mesoscale_01_band_02_sector_04_",
+			"M1S5":"mesoscale_01_band_02_sector_05/mesoscale_01_band_02_sector_05_",
+			"M2S1":"mesoscale_02_band_02_sector_01/mesoscale_02_band_02_sector_01_",
+			"M2S2":"mesoscale_02_band_02_sector_02/mesoscale_02_band_02_sector_02_",
+			"M2S3":"mesoscale_02_band_02_sector_03/mesoscale_02_band_02_sector_03_",
+			"M2S4":"mesoscale_02_band_02_sector_04/mesoscale_02_band_02_sector_04_",
+			"M2S5":"mesoscale_02_band_02_sector_05/mesoscale_02_band_02_sector_05_"}
 		
 		
-		begt = datetime.datetime(TestBed.date.year, TestBed.date.month, TestBed.date.day, beg, 0,0)
-		endt = begt + timedelta(hours =+ dur+5)									# convert to UTC
-		curt = datetime.datetime.now() + timedelta(hours =+ 5, minutes =- 30)	# convert to UTC
+		#begt = datetime.datetime(TestBed.date.year, TestBed.date.month, TestBed.date.day, beg+5, 0,0)
+		curt = datetime.datetime.now() + timedelta(hours =+ 5, minutes =- 30)	# convert to UTC ; data not published in RT capture 30m back
+		endt = curt + timedelta(hours =+ dur)							
+		
 		
 		#url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_"
 		
 		while (curt < endt):
-			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_" + \
-				  "{date}23.gif".format( date = curt.strftime("%Y%m%d%H%M") )
+			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[sec] + \
+				  "{date}26.gif".format( date = curt.strftime("%Y%m%d%H%M") )
 			fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=curt.strftime("%H%M"), ymd=curt.strftime("%Y%m%d"))
 			TestBed.write_file(url, fyle, dir)
 			time.sleep(60)	# only pull data once per minute
-			curt = datetime.datetime.now() + timedelta(hours =+ 5, minutes =- 30)	# convert to UTC
+			curt = datetime.datetime.now() + timedelta(hours =+ 5, minutes =- 30)	# convert to UTC ; data not published in RT capture 30m back
 	
 	
 def main():
@@ -134,14 +141,24 @@ def main():
 	print( "-------------------" )
 # ----------------------------------- #
 # ---- N E W   C O D E	 H E R E  --- #
-
+	print( "Enter path:" )
+	TestBed.REPO = input( "\n>> " ) + '\\'
+	
+	
+	print( "Enter duration in hours:" )
+	dur = int(input( "\n>> " ))
+	
+	TestBed.get_1minG(dur,"M1S5")
+    
+	
+	'''
 	print( "Enter start time in CD/ST (24hr):" )
-	beg = datetime.datetime(2020,6,6,13,10,0)
+	beg = datetime.datetime(2021,12,10,12,0,0)
 	print( "Enter duration in hours:" )
 	dur	 = int( input("\n>> ") )
 	
-	TestBed.bd2_goes(beg, dur, "M2S5")
-	
+	TestBed.bd2_goes(beg, dur, "M1S3")
+	'''
 	
 	
 	'''

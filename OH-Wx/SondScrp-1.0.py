@@ -6,21 +6,23 @@ import requests
 
 
 class Sonde:
-	REPO = 'W:\\WxEvents\\NEW---TEMP\\'
+	REPO = ''
 
 	date = None
 	init = None
-	site = None
+	site = None 
+	archive = None
 
 
 	def __init__(self):
 		Sonde.date = ''
 		Sonde.init = []
 		Sonde.site = []
+		Sonde.archive = False
 		
 		
 	def write_file(url, fyle):
-		path = Sonde.REPO +	 'Soundings/'
+		path = Sonde.REPO
 
 		if not os.path.exists(path):
 			os.makedirs(path)
@@ -38,11 +40,16 @@ class Sonde:
 	def get_sond():
 		url = ''
 		fyle = ''
-		
+
 		for i in Sonde.init:
 			for s in Sonde.site:
-				url = "https://www.spc.noaa.gov/exper/soundings/"
-				url += Sonde.date + i + "_OBS/" + s + ".gif"
+				if Sonde.archive:
+                    # need url to keep Sonde.date for 00Z init on next day
+					url = "https://www.spc.noaa.gov/exper/archive/events/20" + Sonde.date + "/soundings/"
+					url += Sonde.date + i + "_SNDG/" + s + ".gif"
+				else:
+					url = "https://www.spc.noaa.gov/exper/soundings/"
+					url += Sonde.date + i + "_OBS/" + s + ".gif"
 				fyle = "SKEW-T&HODO~" + i + "Z-K" + s + "-20" + Sonde.date + ".gif"
 				
 				Sonde.write_file(url,fyle)
@@ -78,7 +85,7 @@ class Sonde:
 					'NP':['DNR','RIW','TFX','GGW','UNR','LBF','OAX','DVN','GRB','MPX','INL','ABR','BIS'],
 					'SE':['LCH','SHV','LZK','BNA','JAN','LIX','BMX','FFC','TLH','JAX','TBW','CHS','GSO','MHX','RNK','WAL'],
 					'FL':['TLH','JAX','TBW','KEY','MFL'],
-					'':True}
+					'':"gumbo"}
 		
 		Sonde.header()
 		
@@ -99,7 +106,7 @@ class Sonde:
 		
 		Sonde.site = regions[ input('\n>> ').upper() ]
 		
-		if Sonde.site:
+		if Sonde.site == "gumbo":
 			return Sonde.indv_menu()
 		else:
 			return Sonde.init_menu()
@@ -126,18 +133,31 @@ class Sonde:
 		
 		Sonde.date = input('\n>> ')
 		
+		print()
+		print( 'Archive?' )
+		print( '1. Yes' )
+		Sonde.archive = True if input('\n>> ') == '1' else False
+		
 		return Sonde.get_sond()
+		
 		
 		
 def main():
 	quit = False
 	Sonde()
 	
+	os.system("cls")
+	print( "Sounding Scraper" )
+	print( "----------------" )
+	print( "Enter path:" )
+	Sonde.REPO = input( "\n>> " ) + '\\'
+	
 	while( not quit ):
 		Sonde.regn_menu()
 		
 		print( 'Sounding grab complete' )
 		print( 'Quit (y/n)?' )
+		quit = True if input('\n>> ') == 'y' else False
 		
 		
 		

@@ -1,6 +1,15 @@
 CHANGE LOG
 ----------
 
+!!! To Do !!!
+-------------
+create weather event types: torn, derc, wint, trop, ????
+
+allow single select for atmos params; separate menu
+
+use win10 scheduler and single script run; file for configs / params 
+ 
+
 ### config.json ###
 -------------------
 	### ADDED - 9/22/2019 ###
