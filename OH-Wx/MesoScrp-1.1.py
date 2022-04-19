@@ -147,7 +147,8 @@ class Menu:
 				   'DIX':'http://weather.rap.ucar.edu/surface/{date}_metars_lit.gif'.format( date=curt.strftime("%Y%m%d%H") ),
 				   'CPL':'http://weather.rap.ucar.edu/surface/{date}_metars_ict.gif'.format( date=curt.strftime("%Y%m%d%H") ),
 				   'NEW':'http://weather.rap.ucar.edu/surface/{date}_metars_alb.gif'.format( date=curt.strftime("%Y%m%d%H") ),
-                   'ECS':'http://weather.rap.ucar.edu/surface/{date}_metars_clt.gif'.format( date=curt.strftime("%Y%m%d%H") )}
+				   'ECS':'http://weather.rap.ucar.edu/surface/{date}_metars_clt.gif'.format( date=curt.strftime("%Y%m%d%H") ),
+				   'NPL':'http://weather.rap.ucar.edu/surface/{date}_metars_dsm.gif'.format( date=curt.strftime("%Y%m%d%H") )}
 		'''
 		sectors = {'SP':[('SPL','http://rain.ttu.edu/sfc_plots/L_SPLNS_plot.gif'),('TX' :'http://weather.rap.ucar.edu/surface/{date}_metars_abi.gif'.format( date=curt.strftime("%Y%m%d%H")
 		),
@@ -224,7 +225,8 @@ class Menu:
 				   ('SBVORT','dvvr',True),
 				   ('3KmSHR','shr3'),
 				   ('VTNMAG','vtm',True),
-                   ('500mSRH','srh5')]
+				   ('500mSRH','srh5'),
+                   ('HODO','hodo')]
 				   
 		comp	= [('SCCOMP','scp'),
 				   ('SIGTOR','stpc'),
@@ -478,7 +480,7 @@ class Menu:
 		# TEMPORARY #
 		satlat = 31.32
 		satlon = -97.18
-		sectors = ['TX','DIX','OHV']	# array of MesoNet sector(s)
+		sectors = ['TX','DIX','OHV','NPL']	# array of MesoNet sector(s)
 
 		
 				   
@@ -536,7 +538,7 @@ class Menu:
 						Menu.obs['day'] = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )#.strftime('%Y%m%d')
 					
 						Menu.get_obs()
-						Menu.get_mesonet( sectors, curt+timedelta(hours =+ 5) )
+						Menu.get_mesonet( sectors, curt+timedelta(hours =+ 5) )     # convert to UTC !!! must update for DST
 						
 						#Menu.get_goes16(satlat,satlon)
 						

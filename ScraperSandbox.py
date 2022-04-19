@@ -32,7 +32,11 @@ class TestBed:
 		
 		path = path + fyle
 		with open(path, 'wb') as f:
-				f.write( requests.get(url).content )		
+			try:
+				f.write( requests.get(url).content )
+			except request.RequestException as e:
+				print(e)
+				return
 		print(fyle)
 	
 		
@@ -91,7 +95,7 @@ class TestBed:
 		endt = begt + timedelta(hours =+ (end))
 
 		while begt < endt:
-			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/{s}{date}56.gif".format( s=sectors[sec], date=begt.strftime("%Y%m%d%H%M") )
+			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/{s}{date}MAR{time}55.gif".format( s=sectors[sec], date=begt.strftime("%Y%m"), time=begt.strftime("%H%M") )
 			fyle = "BD02~{hm}Z-{ymd}.gif".format(hm=begt.strftime("%H%M"), ymd=begt.strftime("%Y%m%d"))
 			TestBed.write_file(url, fyle, dir)
 			
@@ -121,10 +125,16 @@ class TestBed:
 		#url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/mesoscale_01_band_02_sector_01/mesoscale_01_band_02_sector_01_"
 		
 		while (curt < endt):
-			url = "http://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[sec] + \
-				  "{date}26.gif".format( date = curt.strftime("%Y%m%d%H%M") )
+			#url = "https://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[sec] + \
+			#	  "{date}MAR{time}24.gif".format(date=curt.strftime("%Y%m"), time=curt.strftime("%H%M"))
+			url = "https://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[sec] + \
+				  "{datetime}25.gif".format(datetime=curt.strftime("%Y%m%d%H%M"))
 			fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=curt.strftime("%H%M"), ymd=curt.strftime("%Y%m%d"))
 			TestBed.write_file(url, fyle, dir)
+			
+			print(url)
+			
+			
 			time.sleep(60)	# only pull data once per minute
 			curt = datetime.datetime.now() + timedelta(hours =+ 5, minutes =- 30)	# convert to UTC ; data not published in RT capture 30m back
 	
@@ -148,16 +158,16 @@ def main():
 	print( "Enter duration in hours:" )
 	dur = int(input( "\n>> " ))
 	
-	TestBed.get_1minG(dur,"M1S5")
-    
+	TestBed.get_1minG(dur,"M1S5")	# add capability to pull multiple sectors
+	
 	
 	'''
 	print( "Enter start time in CD/ST (24hr):" )
-	beg = datetime.datetime(2021,12,10,12,0,0)
+	beg = datetime.datetime(2022,3,17,16,0,0)
 	print( "Enter duration in hours:" )
 	dur	 = int( input("\n>> ") )
 	
-	TestBed.bd2_goes(beg, dur, "M1S3")
+	TestBed.bd2_goes(beg, dur, "M2S5")
 	'''
 	
 	
