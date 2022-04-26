@@ -91,7 +91,8 @@ class Sonde:
 		
 		# !!! Expand to enter multiple Regions !!!
 		
-		print( 'Enter Region' )
+		print( 'Enter Region(s)' )
+		print( '(separate Regions with a space' )
 		print()
 		print( '##################' )
 		print( '# NE - Northeast #' )
@@ -104,7 +105,12 @@ class Sonde:
 		print( '# FL - Florida	 #' )
 		print( '##################' )
 		
-		Sonde.site = regions[ input('\n>> ').upper() ]
+		
+		
+		temp = input('\n>> ').upper().split()
+		for r in temp:
+			Sonde.site += regions[r]
+		
 		
 		if Sonde.site == "gumbo":
 			return Sonde.indv_menu()
@@ -117,9 +123,6 @@ class Sonde:
 		
 		print( 'Enter initial time(s)' )
 		print( '(separate initial times with a space' )
-		
-		
-
 		
 		Sonde.init = input('\n>> ').split()
 		
@@ -153,6 +156,7 @@ def main():
 	Sonde.REPO = input( "\n>> " ) + '\\'
 	
 	while( not quit ):
+		Sonde()
 		Sonde.regn_menu()
 		
 		print( 'Sounding grab complete' )
