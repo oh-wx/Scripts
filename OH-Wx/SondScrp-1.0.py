@@ -44,7 +44,7 @@ class Sonde:
 		for i in Sonde.init:
 			for s in Sonde.site:
 				if Sonde.archive:
-                    # need url to keep Sonde.date for 00Z init on next day
+					# need url to keep Sonde.date for 00Z init on next day
 					url = "https://www.spc.noaa.gov/exper/archive/events/20" + Sonde.date + "/soundings/"
 					url += Sonde.date + i + "_SNDG/" + s + ".gif"
 				else:
@@ -84,8 +84,8 @@ class Sonde:
 					'CP':['ABQ','DNR','RIW','UNR','LBF','DDC','OUN','AMA','TOP','OAX','ABR','MPX','GRB','DVN','ILX','SGF','LZK'],
 					'NP':['DNR','RIW','TFX','GGW','UNR','LBF','OAX','DVN','GRB','MPX','INL','ABR','BIS'],
 					'SE':['LCH','SHV','LZK','BNA','JAN','LIX','BMX','FFC','TLH','JAX','TBW','CHS','GSO','MHX','RNK','WAL'],
-					'FL':['TLH','JAX','TBW','KEY','MFL'],
-					'':"gumbo"}
+					'FL':['TLH','JAX','TBW','KEY','MFL']}
+					#'':"gumbo"}
 		
 		Sonde.header()
 		
@@ -106,17 +106,21 @@ class Sonde:
 		print( '##################' )
 		
 		
+		temp = input('\n>> ')
+		if temp == '':
+			return Sonde.indv_menu()
+		else:
+			temp = temp.upper().split()
+			for r in temp:
+				Sonde.site += regions[r]
+			return Sonde.init_menu()
 		
-		temp = input('\n>> ').upper().split()
-		for r in temp:
-			Sonde.site += regions[r]
-		
-		
+		'''
 		if Sonde.site == "gumbo":
 			return Sonde.indv_menu()
 		else:
 			return Sonde.init_menu()
-		
+		'''
 	
 	def init_menu():
 		Sonde.header()
@@ -162,6 +166,8 @@ def main():
 		print( 'Sounding grab complete' )
 		print( 'Quit (y/n)?' )
 		quit = True if input('\n>> ') == 'y' else False
+        
+    os.system("cls")
 		
 		
 		
