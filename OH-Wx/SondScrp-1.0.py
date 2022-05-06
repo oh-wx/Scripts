@@ -114,13 +114,7 @@ class Sonde:
 			for r in temp:
 				Sonde.site += regions[r]
 			return Sonde.init_menu()
-		
-		'''
-		if Sonde.site == "gumbo":
-			return Sonde.indv_menu()
-		else:
-			return Sonde.init_menu()
-		'''
+	
 	
 	def init_menu():
 		Sonde.header()
