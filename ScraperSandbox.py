@@ -133,7 +133,7 @@ class TestBed:
 			#	  "{date}MAR{time}24.gif".format(date=curt.strftime("%Y%m"), time=curt.strftime("%H%M"))
 			for s in sec:
 				url = "https://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[s] + \
-					  "{datetime}54.gif".format(datetime=curt.strftime("%Y%m%d%H%M"))
+					  "{datetime}25.gif".format(datetime=curt.strftime("%Y%m%d%H%M"))
 				fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=curt.strftime("%H%M"), ymd=curt.strftime("%Y%m%d"))
 				dir = "\\{sect}\\".format(sect=s)
 				TestBed.write_file(url, fyle, dir)
@@ -164,7 +164,7 @@ def main():
 	print( "Enter duration in hours:" )
 	dur = int(input( "\n>> " ))
 	
-	TestBed.get_1minG(dur, ("M2S5","M2S3","M2S1","M2S2") )	# add capability to pull multiple sectors
+	TestBed.get_1minG(dur, ("M1S5","M1S3","M1S1") )	# add capability to pull multiple sectors
 	
 	
 	'''

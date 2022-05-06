@@ -160,8 +160,8 @@ def main():
 		print( 'Sounding grab complete' )
 		print( 'Quit (y/n)?' )
 		quit = True if input('\n>> ') == 'y' else False
-        
-    os.system("cls")
+		
+	os.system("cls")
 		
 		
 		

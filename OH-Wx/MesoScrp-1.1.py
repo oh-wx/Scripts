@@ -226,7 +226,7 @@ class Menu:
 				   ('3KmSHR','shr3'),
 				   ('VTNMAG','vtm',True),
 				   ('500mSRH','srh5'),
-                   ('HODO','hodo')]
+				   ('HODO','hodo')]
 				   
 		comp	= [('SCCOMP','scp'),
 				   ('SIGTOR','stpc'),
@@ -444,10 +444,10 @@ class Menu:
 	def day_menu():
 		options = {'1':('Today',Menu.aut_menu)}
 		# add 4 prior days to options		   
-		for i in range(1,5):
+		for i in range(1,7):
 			formdate = Menu.DATE + timedelta(days = -i)
 			options[str(i+1)] = (formdate.strftime('%m/%d/%Y'),Menu.ini_menu)		
-		options['6'] = ('Archive', Menu.ini_menu)
+		options['8'] = ('Archive', Menu.ini_menu)
 		options['9'] = ('Back', Menu.back)
 
 		print( '###############' )
@@ -460,7 +460,7 @@ class Menu:
 		sel = Menu.show_menu(options)
 		
 		# if archive day selected, get date
-		if sel == '6':
+		if sel == '8':
 			Menu.archive = True
 			print( '\nEnter the Archive date (mm/dd/yyyy):' )
 			date = input('\n>> ')
@@ -538,7 +538,7 @@ class Menu:
 						Menu.obs['day'] = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )#.strftime('%Y%m%d')
 					
 						Menu.get_obs()
-						Menu.get_mesonet( sectors, curt+timedelta(hours =+ 5) )     # convert to UTC !!! must update for DST
+						Menu.get_mesonet( sectors, curt+timedelta(hours =+ 5) )		# convert to UTC !!! must update for DST
 						
 						#Menu.get_goes16(satlat,satlon)
 						
