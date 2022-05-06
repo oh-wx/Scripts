@@ -1,6 +1,7 @@
 CHANGE LOG
 ----------
 
+
 !!! To Do !!!
 -------------
 create weather event types: torn, derc, wint, trop, ????
@@ -17,8 +18,13 @@ use win10 scheduler and single script run; file for configs / params
 	
 	SondScrp-1.0.py
 	----------------
-		### ADDED - 7/19/19 ###
-		
+	### ADDED - 7/19/19 ###
+	
+	### UPDATES - 4/26/2022 ###
+	#
+	#	accepts multiple regions
+	
+	
 	### UPDATES - 7/08/2020 ###
 	#
 	#	added indv_menu()
