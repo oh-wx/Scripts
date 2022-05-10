@@ -164,7 +164,7 @@ def main():
 	print( "Enter duration in hours:" )
 	dur = int(input( "\n>> " ))
 	
-	TestBed.get_1minG(dur, ("M1S5","M1S3","M1S1") )	# add capability to pull multiple sectors
+	TestBed.get_1minG(dur, ["M1S5"] )	# add capability to pull multiple sectors
 	
 	
 	'''
