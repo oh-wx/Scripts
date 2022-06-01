@@ -41,6 +41,11 @@ use win10 scheduler and single script run; file for configs / params
 		#	this will replace menu-1.4.py as primary obs scraper
 		#
 		
+		### UPDATES - 5/6/2022 ###
+		#
+		#	day_menu()
+		#		extended available days to D-7
+		
 		### UPDATES - 6/23/2019 ###
 		#
 		#	get_mesonet()
