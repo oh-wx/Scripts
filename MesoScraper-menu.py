@@ -41,25 +41,6 @@ class Menu:
 		Menu.stack =[]
 		
 	
-	def write_file(url, fyle):
-		path = Menu.REPO + Menu.obs['ini'] +'Z' + Menu.obs['day'].strftime('%d') + '/'
-		
-		if Menu.obs['ini'] == '':
-			path = Menu.REPO + Menu.init + 'Z' + Menu.obs['day'].strftime('%d') + '/'
-
-		if not os.path.exists(path):
-			os.makedirs(path)
-		
-		path = path + fyle
-		with open(path, 'wb') as f:
-			try:
-				f.write( requests.get(url).content )
-			except urllib.URLError:
-				print( "Could not download: " + fyle )
-				return
-		print(fyle)
-		
-	
 	### !!! ERROR with stack, Back must be selected twice !!! ###
 	def back():
 		os.system('cls')

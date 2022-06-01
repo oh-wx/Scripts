@@ -9,7 +9,7 @@ from datetime import date, timedelta
 import time
 
 
-class Menu:
+class Write:
 	### GLOBALS ###
 
 	REPO = 'W:\\WxEvents\\NEW---TEMP\\DataGrab\\'
@@ -29,23 +29,23 @@ class Menu:
 	# !!!
 	def __init__(self):
 		# get init time and format date for Current Obs
-		Menu.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
-		Menu.init = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
-		Menu.archive = False
+		Write.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
+		Write.init = str( BeautifulSoup(Write.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
+		Write.archive = False
 		
-		Menu.SPCdate = str( BeautifulSoup(Menu.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
-		Menu.DATE = datetime.datetime( int("20"+Menu.SPCdate.split("/")[2]), int(Menu.SPCdate.split("/")[0]),int(Menu.SPCdate.split("/")[1]) )
-		Menu.date = datetime.datetime.now()
+		Write.SPCdate = str( BeautifulSoup(Write.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[0]
+		Write.DATE = datetime.datetime( int("20"+Write.SPCdate.split("/")[2]), int(Write.SPCdate.split("/")[0]),int(Write.SPCdate.split("/")[1]) )
+		Write.date = datetime.datetime.now()
 		
-		Menu.obs = {'haz':None, 'sec':None, 'day':Menu.date, 'ini':Menu.init}
-		Menu.stack =[]
+		Write.obs = {'haz':None, 'sec':None, 'day':Write.date, 'ini':Write.init}
+		Write.stack =[]
 
 	
 	def write_file(url, fyle):
-		path = Menu.REPO + Menu.obs['ini'] +'Z' + Menu.obs['day'].strftime('%d') + '/'
+		path = Write.REPO + Write.obs['ini'] +'Z' + Write.obs['day'].strftime('%d') + '/'
 		
-		if Menu.obs['ini'] == '':
-			path = Menu.REPO + Menu.init + 'Z' + Menu.obs['day'].strftime('%d') + '/'
+		if Write.obs['ini'] == '':
+			path = Write.REPO + Write.init + 'Z' + Write.obs['day'].strftime('%d') + '/'
 
 		if not os.path.exists(path):
 			os.makedirs(path)
@@ -154,17 +154,17 @@ class Menu:
 					   'E':('MLCSHR','mlcp_eshr',True)}
 			
 			# get obs data to build URL
-			current = True if Menu.obs['ini'] == '' else False
-			#archive = True if (Menu.DATE - Menu.obs['day']).total_seconds() > 432000 else False
-			past = Menu.obs['day'].strftime('%y%m%d')
-			formdate = Menu.obs['day'].strftime('%Y%m%d')
+			current = True if Write.obs['ini'] == '' else False
+			#archive = True if (Write.DATE - Write.obs['day']).total_seconds() > 432000 else False
+			past = Write.obs['day'].strftime('%y%m%d')
+			formdate = Write.obs['day'].strftime('%Y%m%d')
 			parameter = petig	# assign petigre data as default params
 			
-			if not Menu.obs['ini']=='':
-				Menu.obs['ini'] = Menu.obs['ini'].zfill(2)		# zero fill init
+			if not Write.obs['ini']=='':
+				Write.obs['ini'] = Write.obs['ini'].zfill(2)		# zero fill init
 
 			# build parameter list
-			for item in Menu.obs['haz']:
+			for item in Write.obs['haz']:
 				# issues concating tuple list and dictionary tuple
 				if item=='1' or item=='2':
 					parameter += hazard[item]
@@ -172,10 +172,10 @@ class Menu:
 					parameter.append( hazard[item] )
 				
 			# grab data!
-			for s in Menu.obs['sec']:
+			for s in Write.obs['sec']:
 				for i in range(len(parameter)):
-					if Menu.archive:
-						url = 'http://www.spc.noaa.gov/exper/ma_archive/images_s4/{date}/{init}_{param}'.format(date=formdate, init=Menu.obs['ini'], param=parameter[i][1])
+					if Write.archive:
+						url = 'http://www.spc.noaa.gov/exper/ma_archive/images_s4/{date}/{init}_{param}'.format(date=formdate, init=Write.obs['ini'], param=parameter[i][1])
 					else:
 						url = 'http://www.spc.noaa.gov/exper/mesoanalysis/{sector}/{param}/'.format(sector=s[1], param=parameter[i][1])
 					
@@ -189,17 +189,17 @@ class Menu:
 						else:
 							# must use different URL for Past OBS, BR, and VISSAT
 							if parameter[i][0] == 'OBS':
-								url += 'sfc_' + past + '_' + Menu.obs['ini'] + '00'
+								url += 'sfc_' + past + '_' + Write.obs['ini'] + '00'
 							elif parameter[i][0] == 'BR':
-								url += 'rad_' + formdate + '_' + Menu.obs['ini'] + '00'
+								url += 'rad_' + formdate + '_' + Write.obs['ini'] + '00'
 							elif parameter[i][0] == 'VISSAT':
-								url += 'vis_' + formdate + '_' + Menu.obs['ini'] + '00'
+								url += 'vis_' + formdate + '_' + Write.obs['ini'] + '00'
 							else:
-								url += parameter[i][1] + '_' + past + Menu.obs['ini']
+								url += parameter[i][1] + '_' + past + Write.obs['ini']
 
 					url += '.gif'
 					
-					fyle = parameter[i][0] + '~{init}Z-'.format(init=Menu.init if Menu.obs['ini'] ==  '' else Menu.obs['ini']) + s[0] + '-' + formdate + '.gif'
-					Menu.write_file(url, fyle)
+					fyle = parameter[i][0] + '~{init}Z-'.format(init=Write.init if Write.obs['ini'] ==  '' else Write.obs['ini']) + s[0] + '-' + formdate + '.gif'
+					Write.write_file(url, fyle)
 			
 		# --------- end get_obs() ---------- #
