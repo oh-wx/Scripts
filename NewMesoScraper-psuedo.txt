@@ -1,0 +1,10 @@
+MesoAnalysis Data Grab
+----------------------
+
+	1. Menu script to build config file
+		-> update Task Scheduler with duration
+
+
+	2. Get Obs script to pull img URLs from SPC
+		-> run once per hour via Task Scheduler
+		->
