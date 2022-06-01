@@ -11,9 +11,19 @@ allow single select for atmos params; separate menu
 use win10 scheduler and single script run; file for configs / params 
  
 
-### config.json ###
--------------------
+	### config.json ###
+	-------------------
 	### ADDED - 9/22/2019 ###
+	
+	
+	MesoScraper-menu.py
+	-------------------
+	### ADDED - 6/01/22 ###
+	
+	
+	MesoScraper-write.py
+	--------------------
+	### ADDED - 6/01/22 ###
 
 	
 	SondScrp-1.0.py
