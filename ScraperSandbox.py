@@ -97,12 +97,10 @@ class TestBed:
 		while begt < endt:
 			for s in sec:
 				url = "https://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[s] + \
-					  "{datetime}54.gif".format(datetime=begt.strftime("%Y%m%d%H%M"))
+					  "{datetime}25.gif".format(datetime=begt.strftime("%Y%m%d%H%M"))
 				fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=begt.strftime("%H%M"), ymd=begt.strftime("%Y%m%d"))
 				dir = "\\{sect}\\".format(sect=s)
 				TestBed.write_file(url, fyle, dir)
-				
-				print(url)
 			
 			begt = begt + timedelta(minutes =+ 1)
 
@@ -137,9 +135,6 @@ class TestBed:
 				fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=curt.strftime("%H%M"), ymd=curt.strftime("%Y%m%d"))
 				dir = "\\{sect}\\".format(sect=s)
 				TestBed.write_file(url, fyle, dir)
-				
-				print(url)
-			
 			
 			time.sleep(60)	# only pull data once per minute
 			curt = datetime.datetime.now() + timedelta(hours =+ 5, minutes =- 90)	# convert to UTC ; data not published in RT capture 30m back
@@ -160,21 +155,21 @@ def main():
 	print( "Enter path:" )
 	TestBed.REPO = input( "\n>> " ) + '\\'
 	
-	
+	'''
 	print( "Enter duration in hours:" )
 	dur = int(input( "\n>> " ))
 	
-	TestBed.get_1minG(dur, ["M1S5"] )	# add capability to pull multiple sectors
-	
-	
+	TestBed.get_1minG(dur, ["M2S2","M2S5"] )	# add capability to pull multiple sectors
 	'''
+	
+	
 	print( "Enter start time in CD/ST (24hr):" )
-	beg = datetime.datetime(2022,5,2,15,40,0)
+	beg = datetime.datetime(2022,5,31,10,0,0)
 	print( "Enter duration in hours:" )
 	dur	 = int( input("\n>> ") )
 	
-	TestBed.bd2_goes(beg, dur, ("M2S1","M2S3","M2S5"))
-	'''
+	TestBed.bd2_goes(beg, dur, ["M1S5"])
+	
 	
 	
 	'''
