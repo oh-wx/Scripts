@@ -1,0 +1,13 @@
+MesoAnalysis Data Grab
+----------------------
+
+	1. Menu script to build config file
+		-> simple txt file with string of args (separated by space)
+			this should function with existing get_obs() method
+
+		-> update Task Scheduler with duration
+
+
+	2. Write script to pull img URLs from SPC
+		-> run once per hour via Task Scheduler
+		-> 
