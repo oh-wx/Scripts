@@ -20,10 +20,15 @@ use win10 scheduler and single script run; file for configs / params
 	-------------------
 	### ADDED - 6/01/22 ###
 	
+	### UPDATES - 6/02/22 ###
+	#
+	#	creates mesoscrape.config file for use with MesoScraper-write.py
 	
 	MesoScraper-write.py
 	--------------------
 	### ADDED - 6/01/22 ###
+	
+
 
 	
 	SondScrp-1.0.py

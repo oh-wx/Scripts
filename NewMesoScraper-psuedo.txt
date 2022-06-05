@@ -7,6 +7,24 @@ MesoAnalysis Data Grab
 
 		-> update Task Scheduler with duration
 
+		Menu
+		----
+		1. Main Menu
+			a. Real-Time pull,
+			b. Last 6 Days
+			c. Archive
+
+		2. Real-Time Pull
+			a. Parameter list
+				-> build config file
+			!! b. Start Time
+				-> build config file ** only required for Task Scheduler automation
+
+			b. Sector Selection
+				-> build config
+
+		3. 
+
 
 	2. Write script to pull img URLs from SPC
 		-> run once per hour via Task Scheduler

@@ -12,7 +12,7 @@ import time
 class Write:
 	### GLOBALS ###
 
-	REPO = 'W:\\WxEvents\\NEW---TEMP\\DataGrab\\'
+	REPO = './mesoscrape.config'
 	DATE = None
 	
 	page = None
@@ -28,6 +28,8 @@ class Write:
 	#
 	# !!!
 	def __init__(self):
+		
+		
 		# get init time and format date for Current Obs
 		Write.page = urllib.request.urlopen('http://www.spc.noaa.gov/exper/mesoanalysis/new/viewsector.php?sector=20').read()
 		Write.init = str( BeautifulSoup(Write.page, 'html.parser').findAll('div', {'id': 'latest'})[0].text ).split()[1]
@@ -38,8 +40,12 @@ class Write:
 		Write.date = datetime.datetime.now()
 		
 		Write.obs = {'haz':None, 'sec':None, 'day':Write.date, 'ini':Write.init}
-		Write.stack =[]
 
+
+	def read_config():
+		with open(Write.REPO) as f:
+			temp = f.readline()
+			
 	
 	def write_file(url, fyle):
 		path = Write.REPO + Write.obs['ini'] +'Z' + Write.obs['day'].strftime('%d') + '/'
