@@ -97,7 +97,7 @@ class TestBed:
 		while begt < endt:
 			for s in sec:
 				url = "https://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[s] + \
-					  "{datetime}25.gif".format(datetime=begt.strftime("%Y%m%d%H%M"))
+					  "{datetime}55.gif".format(datetime=begt.strftime("%Y%m%d%H%M"))
 				fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=begt.strftime("%H%M"), ymd=begt.strftime("%Y%m%d"))
 				dir = "\\{sect}\\".format(sect=s)
 				TestBed.write_file(url, fyle, dir)
@@ -131,7 +131,7 @@ class TestBed:
 			#	  "{date}MAR{time}24.gif".format(date=curt.strftime("%Y%m"), time=curt.strftime("%H%M"))
 			for s in sec:
 				url = "https://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[s] + \
-					  "{datetime}25.gif".format(datetime=curt.strftime("%Y%m%d%H%M"))
+					  "{datetime}55.gif".format(datetime=curt.strftime("%Y%m%d%H%M"))
 				fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=curt.strftime("%H%M"), ymd=curt.strftime("%Y%m%d"))
 				dir = "\\{sect}\\".format(sect=s)
 				TestBed.write_file(url, fyle, dir)
@@ -164,11 +164,11 @@ def main():
 	
 	
 	print( "Enter start time in CD/ST (24hr):" )
-	beg = datetime.datetime(2022,5,31,10,0,0)
+	beg = datetime.datetime(2022,6,4,8,0,0)
 	print( "Enter duration in hours:" )
 	dur	 = int( input("\n>> ") )
 	
-	TestBed.bd2_goes(beg, dur, ["M1S5"])
+	TestBed.bd2_goes(beg, dur, ["M2S3"])
 	
 	
 	
