@@ -88,7 +88,7 @@ class TestBed:
 		
 		
 		# need to implement full date, not just beginning / ending hour
-		begt = beg + timedelta(hours =+ 5)			# convert to UTC ;	MUST CHANGE W/ DST
+		begt = beg + timedelta(hours =+ 6)			# convert to UTC ;	MUST CHANGE W/ DST
 		#endt = end + timedelta(hours =+ 5)			# convert to UTC ;	MUST CHANGE W/ DST
 		
 		# 4wk archive grab
@@ -97,7 +97,7 @@ class TestBed:
 		while begt < endt:
 			for s in sec:
 				url = "https://rammb.cira.colostate.edu/ramsdis/online/images/goes-16/" + sectors[s] + \
-					  "{datetime}55.gif".format(datetime=begt.strftime("%Y%m%d%H%M"))
+					  "{datetime}25.gif".format(datetime=begt.strftime("%Y%m%d%H%M"))
 				fyle = "BD02~{hm}Z-GOES16-{ymd}.gif".format(hm=begt.strftime("%H%M"), ymd=begt.strftime("%Y%m%d"))
 				dir = "\\{sect}\\".format(sect=s)
 				TestBed.write_file(url, fyle, dir)
@@ -159,16 +159,16 @@ def main():
 	print( "Enter duration in hours:" )
 	dur = int(input( "\n>> " ))
 	
-	TestBed.get_1minG(dur, ["M2S2","M2S5"] )	# add capability to pull multiple sectors
+	TestBed.get_1minG(dur, ["M1S5"] )	
 	'''
 	
 	
 	print( "Enter start time in CD/ST (24hr):" )
-	beg = datetime.datetime(2022,6,4,8,0,0)
+	beg = datetime.datetime(2023,3,2,7,0,0)
 	print( "Enter duration in hours:" )
 	dur	 = int( input("\n>> ") )
 	
-	TestBed.bd2_goes(beg, dur, ["M2S3"])
+	TestBed.bd2_goes(beg, dur, ["M1S2"])
 	
 	
 	

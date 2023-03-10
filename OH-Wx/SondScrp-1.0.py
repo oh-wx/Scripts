@@ -44,7 +44,7 @@ class Sonde:
 		for i in Sonde.init:
 			for s in Sonde.site:
 				if Sonde.archive:
-					# need url to keep Sonde.date for 00Z init on next day
+					# need url to update Sonde.date for 00Z init on next day
 					url = "https://www.spc.noaa.gov/exper/archive/events/20" + Sonde.date + "/soundings/"
 					url += Sonde.date + i + "_SNDG/" + s + ".gif"
 				else:
@@ -132,6 +132,7 @@ class Sonde:
 		
 		print( 'Enter date (YYMMDD)' )
 		
+		# Sond.date should capture a datetime object so Day can be incremented for 00Z Archive data which falls on the next Day
 		Sonde.date = input('\n>> ')
 		
 		print()
